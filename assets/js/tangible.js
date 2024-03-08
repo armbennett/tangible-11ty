@@ -56,27 +56,48 @@ export default class Tangible {
         this.topcodeHeight = 40;
         this.topcodeWidth = 100;
         this.variableIncrementer = 0;
-
+		this.mode = "environment";
         this.declarations = "";
         // Codes currently seen
         this.currentCodes = [];
+        this.soundSets = {
+            GimmeGimmeGimme: [["A","B","C","D"],['challenge1','challenge2']],
+            EyeOfTheTiger: [["A","B","C","D"],['challenge1','challenge2']],
+            DoctorFoster: [["A","B","C","D","E","F"],['']],
+            JingleBells: [["A","B","C","D","E","F"],['challenge1']],
+            Limerick1: [["A","B","C","D","E","F","G","H"],['challenge1']],
+            Limerick2: [["A","B","C","D","E","F","G"],['']],
+            Limerick3: [["A","B","C","D","E"],['challenge1']],
+            Poem: [["A","B","C","D","E","F","G","H"],['']],
+            Popcorn: [["A","B","C","D"],['challenge1']],
+            RowYourBoat: [["A","B","C","D","E","F","G","H"],['challenge1']],
+            Story: [["A","B","C","D","E","F","G","H"],['challenge1']]
+        }
     }
 
     /** Loads assets and data for this set of tiles
      *
      *
      */
-    preloads() {
-        this.sounds = {
-            "A": new Audio("/tangible-11ty/assets/sound/A.wav"),
-            "B": new Audio("/tangible-11ty/assets/sound/B.wav"),
-            "C": new Audio("/tangible-11ty/assets/sound/C.wav")
-        };
-
+    preloads(soundSet) {
+		var soundsTemp = {};
+		this.soundSets[soundSet][0].forEach(function(element) {
+    	soundsTemp[element] = new Audio("/tangible-11ty/assets/sound/"+soundSet+"/"+element+".wav");
+		});
+		document.getElementById("challenges").innerHTML = '';
+		let challenge = 1;
+		if (this.soundSets[soundSet][1] != ''){
+		this.soundSets[soundSet][1].forEach(function(element) {
+		document.getElementById("challenges").innerHTML += "Challenge "+challenge+": <audio controls><source src='/tangible-11ty/assets/sound/"+soundSet+"/"+element+".wav' type='audio/wav'></audio><br/>";
+		challenge += 1;
+		});
+		};
+		
+		this.sounds = soundsTemp;
     }
 
     playAudio(audio) {
-        return new Promise(res => {
+     return new Promise(res => {
             audio.play();
             audio.onended = res;
         });
@@ -242,7 +263,8 @@ export default class Tangible {
         if (this.currentCodes && this.currentCodes.length > 0) {
             let parsedJS = this.declarations + this.parseCodesAsJavascript(this.currentCodes);
             //console.log(parsedJS);
-            document.getElementById("codes").innerHTML = this.parseCodesAsText(this.currentCodes);
+            let parsedText = this.parseCodesAsText(this.currentCodes);
+            document.getElementById("codes").innerHTML = parsedText;
             document.getElementById("result").innerHTML = parsedJS;
             //parsedJS = "await this.playAudio(this.sounds.A); await this.playAudio(this.sounds.B); return true";
             let parsedLines = [];
@@ -252,7 +274,7 @@ export default class Tangible {
     }
 
     setupTangible() {
-        this.setVideoCanvasHeight('video-canvas');
+        //this.setVideoCanvasHeight('video-canvas');
         let tangible = this;
 
         // register a callback function with the TopCode library
@@ -264,7 +286,7 @@ export default class Tangible {
             // obtain a drawing context from the <canvas>
             var ctx = document.querySelector("#video-canvas").getContext('2d');
             // draw a circle over the top of each TopCode
-            document.querySelector("#codes").innerHTML = '';
+            //document.querySelector("#codes").innerHTML = '';
             ctx.fillStyle = "rgba(255, 0, 0, 0.3)";   // very translucent red
             for (let i = 0; i < topcodes.length; i++) {
                 ctx.beginPath();
@@ -289,9 +311,31 @@ export default class Tangible {
         runButton.onclick = function () {
             this.runCode();
         }.bind(this);
+        
+        let switchBtn = document.getElementById('switch-view');
+        switchBtn.onclick = function () {
+        	TopCodes.stopVideoScan('video-canvas');
+        	if (this.mode === "user") {
+        		this.mode = "environment";
+        	} else {
+        		this.mode = "user";
+        	}
+        	TopCodes.startStopVideoScan('video-canvas',this.mode);
+        }.bind(this);
+        
+        let cameraBtn = document.getElementById('camera-button');
+        cameraBtn.onclick = function () {
+            TopCodes.startStopVideoScan('video-canvas',this.mode);
+        }.bind(this);
+        
+        let setSelect = document.getElementById('soundSets');
+        setSelect.onchange = function () {
+        	this.preloads(setSelect.value);
+        }.bind(this);
 
         // Run preloads
-        this.preloads();
+        this.preloads("GimmeGimmeGimme");
+        
     }
 
 }

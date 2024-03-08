@@ -8034,16 +8034,21 @@
 
 
 var TopCodes = {
-
-
-    startStopVideoScan: function (canvasId) {
+	// AHB not setting video size in the first call to getUserMedia results in some browsers defaulting to VGA resolution
+    startStopVideoScan: function (canvasId,mode) {
+    navigator.mediaDevices.getUserMedia({video: {
+                aspectRatio: 16/9, 
+                    facingMode: mode,
+                    width: {ideal: 607},
+                    height: {ideal: 1080}
+                }})
         TopCodes._mediaStreams[canvasId] ?
             TopCodes.stopVideoScan(canvasId) :
-            TopCodes.startVideoScan(canvasId);
+            TopCodes.startVideoScan(canvasId,mode);
     },
 
 
-    startVideoScan: function (canvasId) {
+    startVideoScan: function (canvasId,mode) {
         // initialize the video scanner if necessary
         if (!(canvasId in TopCodes._mediaStreams)) {
             topcodes_initVideoScanner(canvasId);
@@ -8054,14 +8059,15 @@ var TopCodes = {
         if (canvas && video) {
             var vw = parseInt(canvas.getAttribute('width'));
             var vh = parseInt(canvas.getAttribute('height'));
-            console.log(vw);
-            console.log(vh);
+            //console.log(vw);
+            //console.log(vh);
             var vc = {
                 // EH I've changed this to use updated API
                 audio: false, video: {
-                    facingMode: "user",
-                    width: vw,
-                    height: vh
+                aspectRatio: 16/9, 
+                    facingMode: mode,
+                    width: {ideal: vh, min: 607, max: 607},
+                    height: {ideal: vw, min: 1080, max: 1080}
                     //facingMode: 'environment',
                     //mandatory: {minWidth: vw, maxWidth: vw, minHeight: vh, maxHeight: vh}
                 }
@@ -8070,6 +8076,8 @@ var TopCodes = {
                 .then(function (mediaStream) {
                     video.srcObject = mediaStream;
                     video.setAttribute('playsinline', true);
+                    video.setAttribute('width', 607);
+                    video.setAttribute('height', 1080);
                     TopCodes._mediaStreams[canvasId] = mediaStream;
                 })
                 .catch(function (error) {
@@ -8102,8 +8110,7 @@ var TopCodes = {
             TopCodes._callbacks[canvasId](json);
         }
     },
-
-
+    
     _mediaStreams: {},
     _callbacks: {}
 }

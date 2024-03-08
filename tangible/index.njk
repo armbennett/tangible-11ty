@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Tangible Programming test: Row Row Row</title>
+  <title>TIBBL</title>
   <link rel="stylesheet" href="{{ '/assets/css/w3.css' | url }}">
 
   <style>
@@ -10,7 +10,7 @@
   border: solid 1px blue;
   background: #ddd;
    transform: scale(-1, 1);            /*For Firefox (& IE) */
-        -webkit-transform: scale(-1, 1);     /*for Chrome & Opera (& Safari) */
+	    -webkit-transform: scale(-1, 1);     /*for Chrome & Opera (& Safari) */
 }
 .resultWindow{
 width:100%;
@@ -29,18 +29,34 @@ border: solid 1px white;
  <div class="w3-row">
  <div class="w3-col s1 m2 l2">&nbsp;</div>
  <div class="w3-col s10 m8 l8">
-  <canvas id="video-canvas" width="600" height="800" ></canvas>
+  <canvas id="video-canvas" width="607" height="1080" ></canvas>
   <br />
-  <button id="camera-button" onclick="TopCodes.startStopVideoScan('video-canvas')">Start / Stop</button>
+  <button id="camera-button">Start / Stop</button>
+  <button id="switch-view">Switch View</button>
+       <select name="soundSets" id="soundSets"> 
+        <option value="GimmeGimmeGimme">Gimme Gimme Gimme</option> 
+        <option value="EyeOfTheTiger">Eye of the Tiger</option>
+        <option value="Popcorn">Popcorn</option>
+        <option value="DoctorFoster">Doctor Foster</option>
+        <option value="JingleBells">Jingle Bells</option>
+        <option value="Limerick1">Limerick 1</option>
+        <option value="Limerick2">Limerick 2</option>
+        <option value="Limerick3">Limerick 3</option>
+        <option value="Poem">Poem</option>
+        <option value="RowYourBoat">Row Your Boat</option>
+        <option value="Story">Story</option>
+    </select>
+    <button id="run" type="button" >Run</button>
   </div>
   </div>
 </div>
 <div class="w3-content">
  <div class="w3-row">
+ <h2>Challenges</h2>
+ <div id="challenges" class="resultWindow"></div>
   <div id="output">
   <h2>Result</h2>
   <div id="result" class="resultWindow"></div>
-  </div>
    <br/>
    <div class="w3-row">
 
@@ -48,10 +64,8 @@ border: solid 1px white;
   <div id="codes" class="resultWindow"></div>
   </div>
   </div>
+  </div>
   <br/>
-  <div class="w3-row">
-    <button id="run" type="button" >Run</button>
-   </div>
 </div>
 
 <script defer type="module" src="{{ '/assets/js/main.js' | url }}"></script>
