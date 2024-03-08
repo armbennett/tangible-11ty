@@ -23,14 +23,10 @@ border: solid 1px white;
 
 </head>
 
- <body class="w3-black">
- <main>
- <div class="w3-content w3-padding-32">
- <div class="w3-row">
- <div class="w3-col s1 m2 l2">&nbsp;</div>
- <div class="w3-col s10 m8 l8">
-  <canvas id="video-canvas" width="607" height="1080" ></canvas>
-  <br />
+ <body>
+ <div id="main">
+  <canvas id="video-canvas" width="480" height="853" ></canvas>
+  <div id="controls">
   <button id="camera-button">Start / Stop</button>
   <button id="switch-view">Switch View</button>
        <select name="soundSets" id="soundSets"> 
@@ -47,13 +43,11 @@ border: solid 1px white;
         <option value="Story">Story</option>
     </select>
     <button id="run" type="button" >Run</button>
-  </div>
-  </div>
-</div>
-<div class="w3-content">
- <div class="w3-row">
+
  <h2>Challenges</h2>
  <div id="challenges" class="resultWindow"></div>
+ </div>
+ 
   <div id="output">
   <h2>Result</h2>
   <div id="result" class="resultWindow"></div>
@@ -63,15 +57,12 @@ border: solid 1px white;
   <h2>Codes</h2>
   <div id="codes" class="resultWindow"></div>
   </div>
-  </div>
-  </div>
-  <br/>
-</div>
+
 
 <script defer type="module" src="{{ '/assets/js/main.js' | url }}"></script>
 
 
-</main>
+</div>
 </body>
 
 </html>

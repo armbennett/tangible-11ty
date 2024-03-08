@@ -276,7 +276,6 @@ export default class Tangible {
     setupTangible() {
         //this.setVideoCanvasHeight('video-canvas');
         let tangible = this;
-
         // register a callback function with the TopCode library
         TopCodes.setVideoFrameCallback("video-canvas", function (jsonString) {
             // convert the JSON string to an object
@@ -325,6 +324,7 @@ export default class Tangible {
         
         let cameraBtn = document.getElementById('camera-button');
         cameraBtn.onclick = function () {
+
             TopCodes.startStopVideoScan('video-canvas',this.mode);
         }.bind(this);
         
@@ -335,6 +335,8 @@ export default class Tangible {
 
         // Run preloads
         this.preloads("GimmeGimmeGimme");
+        
+        
         
     }
 
