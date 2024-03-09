@@ -8041,7 +8041,7 @@ var TopCodes = {
                     	aspectRatio: 9/16,
                     facingMode: mode,
                     width: {ideal: 480, min: 480, max: 480},
-                    height: {ideal: 750, min: 750, max: 750}
+                    height: {ideal: 700, min: 700, max: 700}
                 }})
         TopCodes._mediaStreams[canvasId] ?
             TopCodes.stopVideoScan(canvasId) :

@@ -87,8 +87,8 @@ float: left;
 }
 
 @media (min-device-width: 481px) and (min-width: 481px) {
-.controls { width: 400px; margin: 5px;}
-#video { width: 400px; margin: 5px;}
+.controls { width: 480px; margin: 5px;}
+#video { width: 480px; margin: 5px;}
 }
 
 button {
