@@ -88,7 +88,7 @@ export default class Tangible {
 		let challenge = 1;
 		if (this.soundSets[soundSet][1] != ''){
 		this.soundSets[soundSet][1].forEach(function(element) {
-		document.getElementById("challenges").innerHTML += "Challenge "+challenge+": <audio controls><source src='/tangible-11ty/assets/sound/"+soundSet+"/"+element+".wav' type='audio/wav'></audio><br/>";
+		document.getElementById("challenges").innerHTML += "<h3>Challenge "+challenge+"</h3><audio controls><source src='/tangible-11ty/assets/sound/"+soundSet+"/"+element+".wav' type='audio/wav'></audio>";
 		challenge += 1;
 		});
 		};
@@ -324,7 +324,6 @@ export default class Tangible {
         
         let cameraBtn = document.getElementById('camera-button');
         cameraBtn.onclick = function () {
-
             TopCodes.startStopVideoScan('video-canvas',this.mode);
         }.bind(this);
         
