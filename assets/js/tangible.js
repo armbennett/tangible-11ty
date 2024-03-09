@@ -82,13 +82,13 @@ export default class Tangible {
     preloads(soundSet) {
 		var soundsTemp = {};
 		this.soundSets[soundSet][0].forEach(function(element) {
-    	soundsTemp[element] = new Audio("/tangible-11ty/assets/sound/"+soundSet+"/"+element+".wav");
+    	soundsTemp[element] = new Audio("/tangible-11ty/assets/sound/"+soundSet+"/"+element+".mp3");
 		});
 		document.getElementById("challenges").innerHTML = '';
 		let challenge = 1;
 		if (this.soundSets[soundSet][1] != ''){
 		this.soundSets[soundSet][1].forEach(function(element) {
-		document.getElementById("challenges").innerHTML += "<h3>Challenge "+challenge+"</h3><audio controls><source src='/tangible-11ty/assets/sound/"+soundSet+"/"+element+".wav' type='audio/wav'></audio>";
+		document.getElementById("challenges").innerHTML += "<h3>Challenge "+challenge+"</h3><audio controls><source src='/tangible-11ty/assets/sound/"+soundSet+"/"+element+".mp3' type='audio/mpeg'></audio>";
 		challenge += 1;
 		});
 		};
