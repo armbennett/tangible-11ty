@@ -5,30 +5,22 @@
   <title>TIBBL</title>
   <link rel="stylesheet" href="/tangible-11ty/assets/css/w3.css">
 
-  <style>
-  #video-canvas{
-  border: solid 1px blue;
-  background: #ddd;
-   transform: scale(-1, 1);            /*For Firefox (& IE) */
-	    -webkit-transform: scale(-1, 1);     /*for Chrome & Opera (& Safari) */
-}
-.resultWindow{
-width:100%;
-min-height:50px;
-border: solid 1px white;
-}
-  </style>
   <script src="/tangible-11ty/assets/js/topcodes.js"></script>
-
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
  <body>
  <div id="main">
-  <canvas id="video-canvas" width="480" height="853" ></canvas>
-  <div id="controls">
-  <button id="camera-button">Start / Stop</button>
-  <button id="switch-view">Switch View</button>
+    	<div id="video">
+  <canvas id="video-canvas" width="480" height="750" ></canvas>
+	<div id="video-controls">
+    <button id="camera-button" class="duo">Start / Stop</button>
+  <button id="switch-view" class="duo">Switch View</button>
+  <button id="run" type="button" class="mono">Run</button>
+  </div>
+  </div>
+  <div class="controls">
+  <h2>Sound Set</h2>
        <select name="soundSets" id="soundSets"> 
         <option value="GimmeGimmeGimme">Gimme Gimme Gimme</option> 
         <option value="EyeOfTheTiger">Eye of the Tiger</option>
@@ -42,8 +34,8 @@ border: solid 1px white;
         <option value="RowYourBoat">Row Your Boat</option>
         <option value="Story">Story</option>
     </select>
-    <button id="run" type="button" >Run</button>
-
+	</div>
+<div class="controls">
  <h2>Challenges</h2>
  <div id="challenges" class="resultWindow"></div>
  </div>

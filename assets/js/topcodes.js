@@ -8041,13 +8041,12 @@ var TopCodes = {
                     	aspectRatio: 9/16,
                     facingMode: mode,
                     width: {ideal: 480, min: 480, max: 480},
-                    height: {ideal: 853, min: 853, max: 853}
+                    height: {ideal: 750, min: 750, max: 750}
                 }})
         TopCodes._mediaStreams[canvasId] ?
             TopCodes.stopVideoScan(canvasId) :
             TopCodes.startVideoScan(canvasId,mode);
     },
-
 
     startVideoScan: function (canvasId,mode) {
         // initialize the video scanner if necessary
