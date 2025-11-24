@@ -8038,10 +8038,10 @@ var TopCodes = {
 
     startStopVideoScan: function (canvasId,mode) {
     navigator.mediaDevices.getUserMedia({video: { 
-                    	aspectRatio: { exact: 1.7777777778 },
-                    facingMode: mode
-                    width: {ideal: 480, min: 480, max: 480},
-                    height: {ideal: 600, min: 600, max: 600}
+                    	aspectRatio: { exact: 1.33 },
+                    facingMode: mode,
+                    width: {ideal: 960, min: 960, max: 960},
+                    height: {ideal: 1200, min: 1200, max: 1200}
                 }})
         TopCodes._mediaStreams[canvasId] ?
             TopCodes.stopVideoScan(canvasId) :
@@ -8065,13 +8065,13 @@ var TopCodes = {
 				vw = vh;
 				vh = temp;
 			}
-            //console.log(vw);
-            //console.log(vh);
+            console.log(vw);
+            console.log(vh);
             var vc = {
                 // EH I've changed this to use updated API
                 audio: false, video: {
-                	aspectRatio: { exact: 1.7777777778 },
-                    facingMode: mode
+                	aspectRatio: { exact: 1.33 },
+                    facingMode: mode,
                     //width: {ideal: vh, min: vh, max: vh},
                     //height: {ideal: vw, min: vw, max: vw}
                     //width: {ideal: vw, min: vw, max: vw},
