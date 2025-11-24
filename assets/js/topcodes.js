@@ -8070,7 +8070,7 @@ var TopCodes = {
             var vc = {
                 // EH I've changed this to use updated API
                 audio: false, video: {
-                	aspectRatio: 9/16,
+                	aspectRatio: { exact: 1.7777777778 },
                     facingMode: mode,
                     //width: {ideal: vh, min: vh, max: vh},
                     //height: {ideal: vw, min: vw, max: vw}
