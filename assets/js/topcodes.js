@@ -8071,11 +8071,11 @@ var TopCodes = {
                 // EH I've changed this to use updated API
                 audio: false, video: {
                 	aspectRatio: { exact: 1.7777777778 },
-                    facingMode: mode
-                    width: {ideal: vh, min: vh, max: vh},
-                    height: {ideal: vw, min: vw, max: vw}
-                    //width: {ideal: vw, min: vw, max: vw},
-                    //height: {ideal: vh, min: vh, max: vh}
+                    facingMode: mode,
+                    //width: {ideal: vh, min: vh, max: vh},
+                    //height: {ideal: vw, min: vw, max: vw}
+                    width: {ideal: vw, min: vw, max: vw},
+                    height: {ideal: vh, min: vh, max: vh}
                     //facingMode: 'environment',
                     //mandatory: {minWidth: vw, maxWidth: vw, minHeight: vh, maxHeight: vh}
                 }
