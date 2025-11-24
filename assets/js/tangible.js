@@ -82,7 +82,7 @@ export default class Tangible {
     preloads(soundSet) {
 		var soundsTemp = {};
 		this.soundSets[soundSet][0].forEach(function(element) {
-    	soundsTemp[element] = new Audio("/tangible-11ty/assets/sound/"+soundSet+"/"+element+".mp3");
+    	soundsTemp[element] = new Audio("assets/sound/"+soundSet+"/"+element+".mp3");
 		});
 		document.getElementById("challenges").innerHTML = '';
 		let challenge = 1;
@@ -108,7 +108,7 @@ export default class Tangible {
      */
     setVideoCanvasHeight(canvasId) {
         let canvas = document.getElementById(canvasId);
-        let heightRatio = 1.5;
+        let heightRatio = 1.33;
         canvas.height = canvas.width * heightRatio;
     }
 
