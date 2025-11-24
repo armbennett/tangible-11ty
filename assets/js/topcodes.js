@@ -8040,8 +8040,8 @@ var TopCodes = {
     navigator.mediaDevices.getUserMedia({video: { 
                     	aspectRatio: { exact: 1.7777777778 },
                     facingMode: mode
-                    //width: {ideal: 480, min: 480, max: 480},
-                    //height: {ideal: 600, min: 600, max: 600}
+                    width: {ideal: 480, min: 480, max: 480},
+                    height: {ideal: 600, min: 600, max: 600}
                 }})
         TopCodes._mediaStreams[canvasId] ?
             TopCodes.stopVideoScan(canvasId) :
@@ -8072,8 +8072,8 @@ var TopCodes = {
                 audio: false, video: {
                 	aspectRatio: { exact: 1.7777777778 },
                     facingMode: mode
-                    //width: {ideal: vh, min: vh, max: vh},
-                    //height: {ideal: vw, min: vw, max: vw}
+                    width: {ideal: vh, min: vh, max: vh},
+                    height: {ideal: vw, min: vw, max: vw}
                     //width: {ideal: vw, min: vw, max: vw},
                     //height: {ideal: vh, min: vh, max: vh}
                     //facingMode: 'environment',
