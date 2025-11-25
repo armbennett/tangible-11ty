@@ -82,7 +82,7 @@ export default class Tangible {
     preloads(soundSet) {
 		var soundsTemp = {};
 		this.soundSets[soundSet][0].forEach(function(element) {
-    	soundsTemp[element] = new Audio("assets/sound/"+soundSet+"/"+element+".mp3");
+    	soundsTemp[element] = new Audio("/tangible-11ty/assets/sound/"+soundSet+"/"+element+".mp3");
 		});
 		document.getElementById("challenges").innerHTML = '';
 		let challenge = 1;
