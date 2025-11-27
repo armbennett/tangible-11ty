@@ -238,7 +238,7 @@ export default class Tangible {
                 case this.commands.PLAY:
                     if (line.length > i + 1) {
                         let letter = this.codeLibrary[line[i + 1].code];
-                        lineJS += "await context.playAudio(this.sounds." + letter + ");\n";
+                        lineJS += "await context.playAudio(this.sounds." + String.fromCharCode(parseInt(letter)+65) + ");\n";
                         //lineJS += "await new Promise(r => setTimeout(resolve, this.sounds." + letter + ".duration * 100));";
                     }
                     lineJS += "";
