@@ -81,14 +81,14 @@ margin: 0 0 20px 0;
 float: left;
 }
 
-@media (min-device-width: 320px) and (max-device-width: 480px) {
+@media (min-device-width: 320px) and (max-device-width: 1200px) {
 .controls { width: 100%; float: right; }
 #video { width: 100%;}
 }
 
-@media (min-device-width: 481px) and (min-width: 481px) {
-.controls { width: 480px; margin: 5px;}
-#video { width: 480px; margin: 5px;}
+@media (min-device-width: 1201px) and (min-width: 1201px) {
+.controls { width: 45%; margin: 5px;}
+#video { width: 45%; margin: 5px;}
 }
 
 button {
