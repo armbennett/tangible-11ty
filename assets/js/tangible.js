@@ -57,6 +57,7 @@ export default class Tangible {
         this.topcodeWidth = 100;
         this.variableIncrementer = 0;
 		this.mode = "environment";
+		this.status = false;
         this.declarations = "";
         // Codes currently seen
         this.currentCodes = [];
@@ -325,6 +326,13 @@ export default class Tangible {
         
         let cameraBtn = document.getElementById('camera-button');
         cameraBtn.onclick = function () {
+    		if (this.status) {
+    			document.getElementById('camera-button').innerText = "Camera On";
+    			this.status = false;
+    		} else {
+    			this.status = true;
+    			document.getElementById('camera-button').innerText = "Camera Off";
+    		}
             TopCodes.startStopVideoScan('video-canvas',this.mode);
         }.bind(this);
         
