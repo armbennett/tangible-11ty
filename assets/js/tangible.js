@@ -65,11 +65,11 @@ export default class Tangible {
         // Codes currently seen
         this.currentCodes = [];
         this.soundSets = {
-            GimmeGimmeGimme: [["A","B","C","D"],['challenge1','challenge2']],
-            EyeOfTheTiger: [["A","B","C","D"],['challenge1','challenge2']],
             Limerick1: [["A","B","C","D","E","F","G","H"],['challenge1']],
             Limerick2: [["A","B","C","D","E","F","G"],['']],
             Limerick3: [["A","B","C","D","E"],['challenge1']],
+            GimmeGimmeGimme: [["A","B","C","D"],['challenge1','challenge2']],
+            EyeOfTheTiger: [["A","B","C","D"],['challenge1','challenge2']],
             Popcorn: [["A","B","C","D"],['challenge1']],
             BodyPercussion: [["A","B","C","D"],['']]
         }
