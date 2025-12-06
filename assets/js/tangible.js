@@ -26,32 +26,35 @@ export default class Tangible {
             151: "7",
             155: "8",
             157: "9",
-            167: "A",
-            171: "B",
-            173: "C",
-            179: "D",
-            181: "E",
-            185: "F",
-            199: "G",
-            203: "H",
-            205: "I",
-            211: "J",
-            213: "K",
-            217: "L",
-            227: "M",
-            229: "N",
-            233: "O",
-            241: "P",
-            271: "Q",
-            279: "R",
-            282: "S",
-            285: "T",
-            295: "U",
-            299: "V",
-            301: "W",
-            307: "X",
-            309: "Y",
-            313: "Z",
+            167: "a",
+            171: "b",
+            173: "c",
+            179: "d",
+            181: "e",
+            185: "f",
+            199: "g",
+            203: "h",
+            205: "i",
+            211: "j",
+            213: "k",
+            217: "l",
+            227: "m",
+            229: "n",
+            233: "o",
+            241: "p",
+            271: "q",
+            279: "r",
+            282: "s",
+            285: "t",
+            295: "u",
+            299: "v",
+            301: "w",
+            307: "x",
+            309: "y",
+            313: "z",
+            327: "=",
+            331: "+",
+            333: "-",
         };
         this.topcodeHeight = 40;
         this.topcodeWidth = 100;
@@ -64,15 +67,11 @@ export default class Tangible {
         this.soundSets = {
             GimmeGimmeGimme: [["A","B","C","D"],['challenge1','challenge2']],
             EyeOfTheTiger: [["A","B","C","D"],['challenge1','challenge2']],
-            DoctorFoster: [["A","B","C","D","E","F"],['']],
-            JingleBells: [["A","B","C","D","E","F"],['challenge1']],
             Limerick1: [["A","B","C","D","E","F","G","H"],['challenge1']],
             Limerick2: [["A","B","C","D","E","F","G"],['']],
             Limerick3: [["A","B","C","D","E"],['challenge1']],
-            Poem: [["A","B","C","D","E","F","G","H"],['']],
             Popcorn: [["A","B","C","D"],['challenge1']],
-            RowYourBoat: [["A","B","C","D","E","F","G","H"],['challenge1']],
-            Story: [["A","B","C","D","E","F","G","H"],['challenge1']]
+            BodyPercussion: [["A","B","C","D"],['']]
         }
     }
 
@@ -342,7 +341,7 @@ export default class Tangible {
         }.bind(this);
 
         // Run preloads
-        this.preloads("RowYourBoat");
+        this.preloads("Limerick1");
         
         
         
