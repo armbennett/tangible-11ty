@@ -65,9 +65,9 @@ export default class Tangible {
         // Codes currently seen
         this.currentCodes = [];
         this.soundSets = {
-            Limerick1: [["A","B","C","D","E","F","G","H"],['challenge1']],
+        	Limerick3: [["A","B","C","D","E"],['challenge1']],
+            Limerick1: [["A","B","C","D","E","F","G","H"],['']],
             Limerick2: [["A","B","C","D","E","F","G"],['']],
-            Limerick3: [["A","B","C","D","E"],['challenge1']],
             GimmeGimmeGimme: [["A","B","C","D"],['challenge1','challenge2']],
             EyeOfTheTiger: [["A","B","C","D"],['challenge1','challenge2']],
             Popcorn: [["A","B","C","D"],['challenge1']],
@@ -341,7 +341,7 @@ export default class Tangible {
         }.bind(this);
 
         // Run preloads
-        this.preloads("Limerick1");
+        this.preloads("Limerick3");
         
         
         
