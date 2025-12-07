@@ -13,9 +13,13 @@ export default class Tangible {
         // Will be made into its getter/setter
         this.codeLibrary = {
             31: this.commands.PLAY,
-            47: "Delay",
+            47: "Rest",
             55: this.commands.LOOP,
             59: this.commands.ENDLOOP,
+            61: "Volume",
+            79: "Function",
+            87: "IF",
+            91: "ENDIF",
             103: "0",
             107: "1",
             109: "2",
@@ -239,7 +243,7 @@ export default class Tangible {
                     if (line.length > i + 1) {
                         let letter = this.codeLibrary[line[i + 1].code];
                         //console.log(letter);
-                        lineJS += "await context.playAudio(this.sounds." + String.fromCharCode(parseInt(letter)+65) + ");\n";
+                        lineJS += "await context.playAudio(this.sounds." + String.fromCharCode(parseInt(letter)+64) + ");\n";
                         //lineJS += "await new Promise(r => setTimeout(resolve, this.sounds." + letter + ".duration * 100));";
                     }
                     lineJS += "";
