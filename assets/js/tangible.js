@@ -281,17 +281,15 @@ export default class Tangible {
 
 	//parses each line of text code to a line of javascript
     parseTextCodeLine(line) {
-    	console.log(line);
         let lineJS = "\n";
         let i = 0;
-        while (i < line.length) {
             if (line[i] == "loop") {
 				let nextSymbol = line[i+1];
                 if (parseInt(nextSymbol)) {
                     lineJS += "for (let x" + this.variableIncrementer + "=0; x" + this.variableIncrementer + " < " + nextSymbol + "; x" + this.variableIncrementer + "++){\n";
                 }
             } else if (line[i] == "end") {
-                    lineJS += "} \n";
+                    lineJS += "}\n";
             } else if (line[i] == "play") {
             	if (line[i+1] == "x") {
             		lineJS += "this.codeThreads["+this.currThread+"].push(String.fromCharCode(this.userInput+96));\n";
@@ -311,8 +309,8 @@ export default class Tangible {
         			lineJS += "this.codeThreads["+this.currThread+"].push('p');\n";
         		}
         	} else if (line[i] == "function") {
-            	lineJS += "var myFunction = function(){\n";
-            } else if (line[i] == "function") {
+            	lineJS += "function myFunction(){\n";
+            } else if (line[i] == "call") {
             	lineJS += "myFunction();\n";
             } else if (line[i] == "if") {
             	let condition = line[i+3];
@@ -330,8 +328,6 @@ export default class Tangible {
             		let variable = line[i+2];
             		lineJS += "this.userInput = "+parseInt(variable)+";\n";
             }
-            i += 1;
-        }
         return lineJS;
     }
     
@@ -373,7 +369,7 @@ export default class Tangible {
         		}
         		document.getElementById('code').value +="DELAY "+duration+"\n";
         	} else if (parsedCode == this.commands.FUNCTION) {
-            	lineJS += "var myFunction = function(){\n";
+            	lineJS += "function myFunction() {\n";
             	document.getElementById('code').value += "FUNCTION\n";
             } else if (parsedCode == this.commands.ENDFUNCTION) {
             	lineJS += "}\n";
