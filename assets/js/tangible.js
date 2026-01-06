@@ -8,18 +8,34 @@ export default class Tangible {
             "LOOP": "Loop",
             "ENDLOOP": "End Loop",
             "PLAY": "Play",
+            "THREAD1": "Thread 1",
+            "THREAD2": "Thread 2",
+            "THREAD3": "Thread 3",
+            "DELAY": "Delay",
+            "FUNCTION": "Function",
+            "ENDFUNCTION": "End Function",
+            "FUNCATION CALL": "Call Function",
+            "IF": "If",
+            "ENDIF": "End If",
+            "ELSE": "Else",
+            "VARIABLE": "x =",
+            "RANDOM": "x = random",
+            "INCREMENT": "x = x + 1",
+            "PLAYX": "Play x",
+            "DECREMENT": "x = x - 1"
         };
         // Code library for translations
         // Will be made into its getter/setter
         this.codeLibrary = {
             31: this.commands.PLAY,
-            47: "Rest",
+            47: this.commands.DELAY,
             55: this.commands.LOOP,
             59: this.commands.ENDLOOP,
-            61: "Volume",
-            79: "Function",
-            87: "IF",
-            91: "ENDIF",
+            61: this.commands.FUNCTION,
+            79: this.commands.ENDFUNCTION,
+            87: this.commands.IF,
+            91: this.commands.ENDIF,
+            93: this.commands.ELSE,
             103: "0",
             107: "1",
             109: "2",
@@ -30,90 +46,98 @@ export default class Tangible {
             151: "7",
             155: "8",
             157: "9",
-            167: "a",
-            171: "b",
-            173: "c",
-            179: "d",
-            181: "e",
-            185: "f",
-            199: "g",
-            203: "h",
-            205: "i",
-            211: "j",
-            213: "k",
-            217: "l",
-            227: "m",
-            229: "n",
-            233: "o",
-            241: "p",
-            271: "q",
-            279: "r",
-            282: "s",
-            285: "t",
-            295: "u",
-            299: "v",
-            301: "w",
-            307: "x",
-            309: "y",
-            313: "z",
-            327: "=",
-            331: "+",
-            333: "-",
+            167: "stop",
+            199: "bottom-left",
+            203: "bottom-right",
+            205: this.commands.INCREMENT,
+            211: this.commands.PLAYX,
+            213: this.commands.DECREMENT,
+            327: this.commands.THREAD1,
+            331: this.commands.THREAD2,
+            333: this.commands.THREAD3,
+            341: this.commands.FUNCTIONCALL,
+            345: this.commands.VARIABLE,
+            355: this.commands.RANDOM,
+            357: "run"
         };
         this.topcodeHeight = 40;
         this.topcodeWidth = 100;
+        this.userInput = 0; // value of TIBBL variable stored here
+        this.synthesis = window.speechSynthesis;
         this.variableIncrementer = 0;
 		this.mode = "environment";
-		this.status = false;
+		this.cameraStatus = false; //camera on or off
+		this.remoteMode = false; //remote mode enabled or not
+		this.threads = [[],[],[]]; //holds the currently selected sound sets
+		this.codeThreads = [[],[],[]]; //the sounds to be played when program is run are queued here
         this.declarations = "";
-        // Codes currently seen
-        this.currentCodes = [];
+        this.left = false; //is the topcode in the bottom left of the board visible?
+        this.right = false; //is the topcode in the bottom right of the board visible?
+        this.currentCodes = []; //topcodes currently seen
+        this.currThread = 0; //used to keep track of current thread when parsing program
+        this.t = 0;
+        this.attempts = 0; //keep track of number of attempts to successfully scan and run program
+        this.playActive = true; //used to prevent program executing multiple times in remote mode
         this.soundSets = {
-        	Limerick3: [["A","B","C","D","E"],['challenge1']],
-            Limerick1: [["A","B","C","D","E","F","G","H"],['']],
-            Limerick2: [["A","B","C","D","E","F","G"],['']],
-            GimmeGimmeGimme: [["A","B","C","D"],['challenge1','challenge2']],
-            EyeOfTheTiger: [["A","B","C","D"],['challenge1','challenge2']],
-            Popcorn: [["A","B","C","D"],['challenge1']],
-            BodyPercussion: [["A","B","C","D"],['']]
+        	    LowAndFX: { 
+        	    a: [0, 2000], 
+        	    b: [2000, 4000], 
+        	    c: [6000, 4000], 
+        	    d: [10000, 4000],
+        	    e: [14000, 4000],
+        	    f: [18000, 4000], 
+        	    g: [22000, 4000], 
+        	    h: [26000, 4000], 
+        	    p: [30000, 1000]},
+        	    High: { 
+        	    a: [0, 4000], 
+        	    b: [4000, 4000], 
+        	    c: [8000, 4000], 
+        	    d: [12000, 4000],
+        	    e: [16000, 4000],
+        	    f: [20000, 2000], 
+        	    g: [22000, 4000], 
+        	    h: [26000, 4000], 
+        	    p: [30000, 1000]},
+        	    Drums: { 
+        	    a: [0, 4000], 
+        	    b: [4000, 4000], 
+        	    c: [8000, 4000], 
+        	    d: [12000, 4000],
+        	    e: [16000, 4000],
+        	    f: [20000, 4000], 
+        	    g: [24000, 4000], 
+        	    h: [28000, 2000], 
+        	    p: [30000, 1000]},
+        	    NatureSounds: { 
+        	    a: [0, 8000], 
+        	    b: [8000, 8000], 
+        	    c: [16000, 8000], 
+        	    d: [24000, 8000],
+        	    e: [32000, 8000],
+        	    f: [40000, 8000], 
+        	    g: [48000, 8000], 
+        	    h: [56000, 8000], 
+        	    p: [64000, 1000]}
         }
     }
-
-    /** Loads assets and data for this set of tiles
-     *
-     *
-     */
-    preloads(soundSet) {
-		var soundsTemp = {};
-		
-		this.soundSets[soundSet][0].forEach(function(element) {
-    	soundsTemp[element] = new Audio("assets/sound/"+soundSet+"/"+element+".mp3");
+     
+     //loads sound sets
+    preloads(soundSet,t) {
+		var thread = new Howl({
+  		src: ["assets/sound/"+soundSet+".mp3"],
+  		volume: 0.2,
+  		sprite: this.soundSets[soundSet]
 		});
-		document.getElementById("challenges").innerHTML = '';
-		let challenge = 1;
-		if (this.soundSets[soundSet][1] != ''){
-		this.soundSets[soundSet][1].forEach(function(element) {
-		document.getElementById("challenges").innerHTML += "<h3>Challenge "+challenge+"</h3><audio controls><source src='assets/sound/"+soundSet+"/"+element+".mp3' type='audio/mpeg'></audio>";
-		challenge += 1;
-		});
-		};
-		this.sounds = soundsTemp;
+		this.threads[t] = thread;
     }
 
-    playAudio(audio) {
-     return new Promise(res => {
-            audio.play();
-            audio.onended = res;
-        });
-    }
-
-    /**
-     Set the video canvas to the right aspect ratio
-     */
+     //Set the video canvas to the right aspect ratio
     setVideoCanvasHeight(canvasId) {
         let canvas = document.getElementById(canvasId);
         let heightRatio = 1.33;
         canvas.height = canvas.width * heightRatio;
+
     }
 
 
@@ -132,7 +156,6 @@ export default class Tangible {
             }
             outputString += "<br/>\n";
         }
-
         return outputString;
     }
 
@@ -198,99 +221,267 @@ export default class Tangible {
      @return text translations of code
      */
     parseCodesAsJavascript(topCodes) {
-
         let outputJS = "";
+        this.codeThreads = [[],[],[],[]];
         let grid = this.sortTopCodesIntoGrid(topCodes);
-        //console.log(grid);
         for (let i = 0; i < grid.length; i++) {
             outputJS += this.parseTopCodeLine(grid[i]);
         }
-        /*for (let i = 0; i < topCodes.length; i++) {
-            if (topCodes[i].code in this.codeLibrary){
-                outputJS += this.codeLibrary[topCodes[i].code] + " ";
-
-            }
-        }*/
         return outputJS;
     }
+    //Parse text code as javascript
+    parseTextAsJavascript(text) {
+        let outputJS = "";
+        this.codeThreads = [[],[],[],[]];
+ 		var codeArray = text.split('\n');
+ 		for (let i = 0; i < codeArray.length; i++) {
+ 			codeArray[i] = codeArray[i].split(" ");
+ 			outputJS += this.parseTextCodeLine(codeArray[i]);
+ 		}
+        return outputJS;
+    }
+    
+    //begins playback of thread and queues up each sound to play as the previous one ends
+    playStart(s,l) {
+		s.play(l[0]);
+		s.on('end', function(){
+  			l.shift();
+ 			if (l.length > 0) {
+  				s.play(l[0]);
+  			} else {
+  				l = [];
+  			}
+		});
+	}
+    
+    //converts the angle value of the topcode to a number between 1 and 8
+    decodeDial(ang) {
+        let letter = "";
+        if (ang < 0.43) {
+            letter = "5";
+        } else if (ang < 1.4) {
+            letter = "4";
+        } else if (ang < 1.98) {
+            letter = "3";
+        } else if (ang < 2.85) {
+            letter = "2";
+        } else if (ang < 3.62) {
+            letter = "1";
+        } else if (ang < 4.30) {
+            letter = "8";
+        } else if (ang < 5.07) {
+            letter = "7";
+        } else {
+            letter = "6";
+        }
+        //console.log(ang);
+        //console.log(letter);
+        return letter;
+    }
 
-
-    parseTopCodeLine(line) {
-        //this.codeLibrary[grid[i][x].code]
+	//parses each line of text code to a line of javascript
+    parseTextCodeLine(line) {
+    	console.log(line);
         let lineJS = "\n";
         let i = 0;
         while (i < line.length) {
-            let parsedCode = this.codeLibrary[line[i].code];
-            //console.log(parsedCode);
-            switch (parsedCode) {
-                case this.commands.LOOP:
-                    // See if we've got a number next
-                    if (line.length > i + 1) {
-                        let nextSymbol = this.codeLibrary[line[i + 1].code];
-                        if (parseInt(nextSymbol)) {
-                            lineJS += "for (let x" + this.variableIncrementer + "=0; x" + this.variableIncrementer + " < " + nextSymbol + "; x" + this.variableIncrementer + "++){";
-                            this.variableIncrementer += 1;
-                            i += 1;
-                        }
-                    } else {
-                        //console.log("ERROR: No increment or bad increment for for loop!");
-                    }
-                    break;
-                case this.commands.ENDLOOP:
+            if (line[i] == "loop") {
+				let nextSymbol = line[i+1];
+                if (parseInt(nextSymbol)) {
+                    lineJS += "for (let x" + this.variableIncrementer + "=0; x" + this.variableIncrementer + " < " + nextSymbol + "; x" + this.variableIncrementer + "++){\n";
+                }
+            } else if (line[i] == "end") {
                     lineJS += "} \n";
-                    break;
-                case this.commands.PLAY:
-                    if (line.length > i + 1) {
-                        let letter = this.codeLibrary[line[i + 1].code];
-                        //console.log(letter);
-                        lineJS += "await context.playAudio(this.sounds." + String.fromCharCode(parseInt(letter)+64) + ");\n";
-                        //lineJS += "await new Promise(r => setTimeout(resolve, this.sounds." + letter + ".duration * 100));";
-                    }
-                    lineJS += "";
-                    break;
-
+            } else if (line[i] == "play") {
+            	if (line[i+1] == "x") {
+            		lineJS += "this.codeThreads["+this.currThread+"].push(String.fromCharCode(this.userInput+96));\n";
+            	} else {
+            		let letter = line[i+1];
+                    lineJS += "this.codeThreads["+this.currThread+"].push('" + String.fromCharCode(parseInt(letter)+96) + "');\n";
+            	}                    
+            } else if (line[i] == "thread" && line[i+1]=="1") {
+            	this.currThread = 0;
+            } else if (line[i] == "thread" && line[i+1]=="2") {
+            	this.currThread = 1;
+            } else if (line[i] == "thread" && line[i+1]=="3") {
+            	this.currThread = 2;
+            } else if (line[i] == "delay") {
+            	let duration = line[i+1];
+            	for (let i = 0; i < parseInt(duration); i++) {
+        			lineJS += "this.codeThreads["+this.currThread+"].push('p');\n";
+        		}
+        	} else if (line[i] == "function") {
+            	lineJS += "var myFunction = function(){\n";
+            } else if (line[i] == "function") {
+            	lineJS += "myFunction();\n";
+            } else if (line[i] == "if") {
+            	let condition = line[i+3];
+            	lineJS += "if (this.userInput>"+parseInt(condition)+") {\n";
+            } else if (line[i] == "else") {
+            	lineJS += "} else {\n";
+            } else if (line[i] == "x") {
+            	if (line[i+2] == "random") {
+            		lineJS += "this.userInput = Math.random() * (8 - 1) + 1;\n";
+            	} else if (line[i+3] == "+") {
+            		lineJS += "this.userInput +=1;\n";
+            	} else if (line[i+3] == "+") {
+            		lineJS += "this.userInput -=1;\n";
+            	}
+            		let variable = line[i+2];
+            		lineJS += "this.userInput = "+parseInt(variable)+";\n";
             }
             i += 1;
         }
         return lineJS;
     }
-
-    // await new Promise(resolve => setTimeout(resolve, 1500));
-
-    async evalTile(tileCode, context) {
-
-        eval('(async (context) => {"use strict";' + tileCode + '})(context)');
+    
+    //parses each topcode to a line of javascript + add a text code version to the 'code' textarea
+    parseTopCodeLine(line) {
+        let lineJS = "\n";
+        let i = 0;
+        while (i < line.length) {
+            let parsedCode = this.codeLibrary[line[i].code];
+            if (parsedCode == this.commands.LOOP) {
+						let nextSymbol = this.decodeDial(line[i].angle);
+                        if (parseInt(nextSymbol)) {
+                            lineJS += "for (let x" + this.variableIncrementer + "=0; x" + this.variableIncrementer + " < " + nextSymbol + "; x" + this.variableIncrementer + "++){\n";
+                            document.getElementById('code').value += "LOOP "+nextSymbol+" TIMES\n";
+                        }
+            } else if (parsedCode == this.commands.ENDLOOP) {
+                    lineJS += "} \n";
+                    document.getElementById('code').value += "END LOOP\n";
+            } else if (parsedCode == this.commands.PLAY) {
+						let letter = this.decodeDial(line[i].angle);
+                        lineJS += "this.codeThreads["+this.currThread+"].push('" + String.fromCharCode(parseInt(letter)+96) + "');\n";
+                        document.getElementById('code').value +="PLAY "+letter+"\n";
+            } else if (parsedCode == this.commands.PLAYX) {
+                        lineJS += "this.codeThreads["+this.currThread+"].push(String.fromCharCode(this.userInput+96));\n";
+                        document.getElementById('code').value += "PLAY X\n";
+            } else if (parsedCode == this.commands.THREAD1) {
+            	document.getElementById('code').value += "THREAD 1\n";
+            	this.currThread = 0;
+            } else if (parsedCode == this.commands.THREAD2) {
+            	document.getElementById('code').value += "THREAD 2\n";
+            	this.currThread = 1;
+            } else if (parsedCode == this.commands.THREAD3) {
+            	document.getElementById('code').value += "THREAD 3\n";
+            	this.currThread = 2;
+            } else if (parsedCode == this.commands.DELAY) {
+            	let duration = this.decodeDial(line[i].angle);
+            	for (let i = 0; i < parseInt(duration); i++) {
+        			lineJS += "this.codeThreads["+this.currThread+"].push('p');\n";
+        		}
+        		document.getElementById('code').value +="DELAY "+duration+"\n";
+        	} else if (parsedCode == this.commands.FUNCTION) {
+            	lineJS += "var myFunction = function(){\n";
+            	document.getElementById('code').value += "FUNCTION\n";
+            } else if (parsedCode == this.commands.ENDFUNCTION) {
+            	lineJS += "}\n";
+            	document.getElementById('code').value += "END FUNCTION\n";
+            } else if (parsedCode == this.commands.FUNCTIONCALL) {
+            	lineJS += "myFunction();\n";
+            	document.getElementById('code').value += "CALL FUNCTION\n";
+            } else if (parsedCode == this.commands.IF) {
+            	let condition = this.decodeDial(line[i].angle);
+            	lineJS += "if (this.userInput>"+parseInt(condition)+") {\n";
+            	document.getElementById('code').value += "IF X > "+condition+"\n";
+            } else if (parsedCode == this.commands.ENDIF) {
+            	lineJS += "}\n";
+            	document.getElementById('code').value += "END IF\n";
+            } else if (parsedCode == this.commands.ELSE) {
+            	lineJS += "} else {\n";
+            	document.getElementById('code').value += "ELSE\n";
+            } else if (parsedCode == this.commands.VARIABLE) {
+            	let variable = this.decodeDial(line[i].angle);
+            	lineJS += "this.userInput = "+parseInt(variable)+";\n";
+            	document.getElementById('code').value += "X = "+variable+"\n";
+            } else if (parsedCode == this.commands.RANDOM) {
+            	lineJS += "this.userInput = Math.random() * (8 - 1) + 1;\n";
+            	document.getElementById('code').value +="X = RANDOM\n";
+            } else if (parsedCode == this.commands.INCREMENT) {
+            	lineJS += "this.userInput +=1;\n";
+            	document.getElementById('code').value +="X = X + 1\n";
+            } else if (parsedCode == this.commands.DECREMENT) {
+            	lineJS += "this.userInput -=1;\n";
+            	document.getElementById('code').value +="X = X - 1\n";
+            }
+            i += 1;
+        }
+        return lineJS;
+    }
+    
+    evalTile(tileCode, context) {
+        eval('( (context) => {"use strict";' + tileCode + '})(context)');
         return true;
     }
 
-
-    async runCode() {
-        if (this.currentCodes && this.currentCodes.length > 0) {
+	//runs scanned code, only runs if both left and right topcodes are visible, will make 5 attempts
+    runCode() {
+    	var self = this;
+    	if (this.currentCodes) {
+        //if (this.currentCodes && this.left && this.right) {
+        	document.getElementById('code').value = "";
             let parsedJS = this.declarations + this.parseCodesAsJavascript(this.currentCodes);
-            //console.log(parsedJS);
-            let parsedText = this.parseCodesAsText(this.currentCodes);
-            document.getElementById("codes").innerHTML = parsedText;
-            document.getElementById("result").innerHTML = parsedJS;
-            //parsedJS = "await this.playAudio(this.sounds.A); await this.playAudio(this.sounds.B); return true";
+            console.log(parsedJS);
+            this.attempts = 0;
             let parsedLines = [];
             parsedLines.push(this.evalTile(parsedJS, this));
-            let done = await Promise.all(parsedLines);
+            for (let i = 0; i < this.codeThreads.length; i++) {
+            	if (this.codeThreads[i].length > 0) {
+        			this.playStart(this.threads[i],this.codeThreads[i]);
+        		}
+        	}
+        } else if (this.attempts < 5) {
+        	this.attempts += 1;
+        	console.log(this.attempts);
+        	setTimeout(function() {
+  				self.runCode();
+			}, 100);
         }
     }
-
+    
+    //runs the text code from the 'code' text area
+    runTextCode() {
+     	var codeText = document.getElementById("code");
+ 		var code = codeText.value.toLowerCase();
+        let parsedJS = this.parseTextAsJavascript(code);
+        console.log(parsedJS);
+        let parsedLines = [];
+        parsedLines.push(this.evalTile(parsedJS, this));
+        for (let i = 0; i < this.codeThreads.length; i++) {
+            if (this.codeThreads[i].length > 0) {
+        		this.playStart(this.threads[i],this.codeThreads[i]);
+        	}
+        }
+    }
+    
+    //reads out the text code from the 'code' textarea
+    readCode() {
+    	var codeText = document.getElementById("code");
+ 		var code = codeText.value.toLowerCase();
+    	var codeArray = code.split('\n');
+		for (let i = 0; i < codeArray.length; i++) {
+            	var utterance = new SpeechSynthesisUtterance(codeArray[i]);
+            	this.synthesis.speak(utterance);
+        }
+    }
+	
     setupTangible() {
-        //this.setVideoCanvasHeight('video-canvas');
+        this.setVideoCanvasHeight('video-canvas');
         let tangible = this;
+        var ctx = document.querySelector("#video-canvas").getContext('2d');
         // register a callback function with the TopCode library
         TopCodes.setVideoFrameCallback("video-canvas", function (jsonString) {
             // convert the JSON string to an object
             var json = JSON.parse(jsonString);
             // get the list of topcodes from the JSON object
             var topcodes = json.topcodes;
+            var stop = false;
+            var run = false;
+            tangible.left = false;
+            tangible.right = false;
             // obtain a drawing context from the <canvas>
-            var ctx = document.querySelector("#video-canvas").getContext('2d');
             // draw a circle over the top of each TopCode
-            //document.querySelector("#codes").innerHTML = '';
             ctx.fillStyle = "rgba(255, 0, 0, 0.3)";   // very translucent red
             for (let i = 0; i < topcodes.length; i++) {
                 ctx.beginPath();
@@ -298,22 +489,35 @@ export default class Tangible {
                 ctx.fill();
                 ctx.font = "26px Arial";
                 ctx.fillText(topcodes[i].code, topcodes[i].x, topcodes[i].y);
-                //console.log(topcodes[i].code +', x:'+topcodes[i].x, topcodes[i].y)
-                //document.querySelector("#result").innerHTML += '<br/>' + topcodes[i].code + ', x:' + topcodes[i].x + ', y:' + topcodes[i].y;
+                if (topcodes[i].code == 167) { stop = true; }
+                if (topcodes[i].code == 357) { run = true; }
+                if (topcodes[i].code == 199) { tangible.left = true; }
+                if (topcodes[i].code == 203) { tangible.right = true; }
             }
-
-            //document.querySelector("#result").innerHTML = tangible.parseCodesAsText(topcodes);
+			if (tangible.remoteMode && run && !stop && tangible.playActive) {
+				tangible.runCode();
+				tangible.playActive = false;
+			} else if (tangible.remoteMode && !run && stop) {
+				tangible.playActive = true;
+			}
             tangible.currentCodes = topcodes;
             tangible.once = true;
-
-
         }, this);
 
         // Setup buttons
-        //console.log(document.getElementById('run'));
+        //runs scanned code if camera is active, otherwise run text code from 'code' textarea
         let runButton = document.getElementById('run');
         runButton.onclick = function () {
-            this.runCode();
+    		if (document.getElementById('camera-button').checked) {
+    			this.runCode();
+    		} else {
+    			this.runTextCode();
+    		}
+        }.bind(this);
+        
+        let readButton = document.getElementById('read');
+        readButton.onclick = function () {
+			this.readCode();
         }.bind(this);
         
         let switchBtn = document.getElementById('switch-view');
@@ -327,28 +531,47 @@ export default class Tangible {
         	TopCodes.startStopVideoScan('video-canvas',this.mode);
         }.bind(this);
         
+        let remoteBtn = document.getElementById('remote-button');
+        remoteBtn.onclick = function () {
+        	if (document.getElementById('remote-button').checked) {
+        		this.remoteMode = true;
+        	} else {
+        		this.remoteMode = false;
+        	}
+        	console.log(remoteMode);
+        }.bind(this);
+        
         let cameraBtn = document.getElementById('camera-button');
         cameraBtn.onclick = function () {
-    		if (this.status) {
-    			document.getElementById('camera-button').innerText = "Camera On";
-    			this.status = false;
+    		if (document.getElementById('camera-button').checked) {
+    			this.cameraStatus = true;
     		} else {
-    			this.status = true;
-    			document.getElementById('camera-button').innerText = "Camera Off";
+    			this.cameraStatus = false;
     		}
             TopCodes.startStopVideoScan('video-canvas',this.mode);
         }.bind(this);
         
-        let setSelect = document.getElementById('soundSets');
-        setSelect.onchange = function () {
-        	this.preloads(setSelect.value);
+        let setSelect1 = document.getElementById('soundSets1');
+        setSelect1.onchange = function () {
+        	this.preloads(setSelect1.value,0);
         }.bind(this);
-
+        
+        let setSelect2 = document.getElementById('soundSets2');
+        setSelect2.onchange = function () {
+        	this.preloads(setSelect2.value,1);
+        }.bind(this);
+        
+        let setSelect3 = document.getElementById('soundSets3');
+        setSelect3.onchange = function () {
+        	this.preloads(setSelect3.value,2);
+        }.bind(this);
+        
         // Run preloads
-        this.preloads("GimmeGimmeGimme");
+        this.preloads("LowAndFX",0);
+        this.preloads("High",1);
+        this.preloads("Drums",2);
+        
+        }
         
         
-        
-    }
-
-}
+        }

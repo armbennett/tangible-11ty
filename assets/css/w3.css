@@ -25,15 +25,23 @@ h1,h2,h3,h4,h5,h6{font-family:"Segoe UI",Arial,sans-serif;font-weight:400;margin
 hr{border:0;border-top:1px solid #eee;margin:20px 0}
 
 body {
-	background-color: #ceede5;
+	background-color: #aac9eb;
 	color: #19736d;
 }
 
 #output { display: none }
 
+#top-bar {
+	background-color: #3874b6;
+	width:100%;
+	padding: 5px 0 0 5px;
+	float: left;
+	margin: 0;
+}
+
 h2 {
-	background-color: #19736d;
-	color: #ceede5;
+	background-color: #3874b6;
+	color: #fff;
 	font-size:1.5em;
 }
 
@@ -42,6 +50,10 @@ h3 {
 	margin: 5px 0 0 0;
 	padding: 0;
 	font-weight: bold;
+}
+
+h4 {
+	font-size:1.2em;
 }
 
 #main {
@@ -66,61 +78,149 @@ text-align: center;
 }
 
 .controls {
-float: left;
-position: relative;
-border: solid 1px #19736d;
+border: solid 1px #3874b6;
 background-color: #fff;
 text-align: center;
-margin: 0 0 20px 0;
+margin: 0 0 10px 0;
+float: right;
+width: 100%; 
 }
 
 #video {
-border: solid 1px #19736d;
+border: solid 1px #3874b6;
 background-color: #fff;
-margin: 0 0 20px 0;
+margin: 0 0 10px 0;
 float: left;
-}
-
-@media (min-device-width: 320px) and (max-device-width: 1200px) {
-.controls { width: 100%; float: right; }
-#video { width: 100%;}
-}
-
-@media (min-device-width: 1201px) and (min-width: 1201px) {
-.controls { width: 45%; margin: 5px;}
-#video { width: 45%; margin: 5px;}
-}
-
-button {
-  background-color: #19736d; 
-  border: solid 1px #ceede5;
-  color: #ceede5;
-  padding: 10px 0;
-  text-align: center;
-  text-decoration: none;
-  display: inline;
-  font-size: 18px;
-  margin: 0;
-}
-
-select {
-	width: 80%;
-	margin: 5px; 0 5px 0;
+width: 100%;
 }
 
 button:hover {
-  background-color: #ceede5; 
-  border: solid 1px #19736d;
-  color: #19736d;
+  background-color: #aac9eb; 
+  border: solid 1px #3874b6;
+  color: #3874b6;
   cursor:pointer;
 }
 
-.duo {
-	width: 50%;
+input:hover + .btn-slider {
+  background-color: #aac9eb; 
+  border: solid 1px #3874b6;
+  color: #3874b6;
+  cursor:pointer;
 }
 
-.mono {
+input:checked + .btn-slider {
+  background-color: #aac9eb; 
+  border: solid 1px #3874b6;
+  color: #3874b6;
+  cursor:pointer;
+}
+
+.btn {
+	width: 100px;
+	height: 100px;
+	position: relative;
+	background-color: #3874b6; 
+  border: solid 2px #fff;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 0 5px 5px 5px;
+  border-radius: 50%;
+    float: left;
+}
+
+.run-text {
+    float: none;
+}
+
+.btn-slider {
+  position: absolute;
+  cursor: pointer;
+  height: 100px;
+  width: 100px;
+	background-color: #3874b6; 
+  border: solid 2px #fff;
+  color: #fff;
+  padding: 22px 10px 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline;
+  font-size: 16px;
+  margin: 0 5px 5px 5px;
+  border-radius: 50%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+span {
+line-height: 20px;
+}
+
+select {
+ width: 80%;
+}
+
+.btn-box input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.btn-box {
+  position: relative;
+  display: inline-block;
+  height: 100px;
+  width: 100px;
+  float: left;
+  margin: 0 10px 0 0;
+}
+
+#logo {
+	float: left;
+	margin: 20px 25px 0 25px;
+}
+
+#buttons {
+	float: right;
+	padding: 0 5px;
+}
+
+#footer {
 	width: 100%;
+	float: left;
+	text-align: center;
 }
 
+#footer a{
+	color: #3874b6;
+	font-size:0.75em;
+}
+
+@media (max-width: 725px) {
+#buttons { padding: 0; margin: 0; }
+#logo { opacity: 0;	width: 0; height: 0; margin: 0; padding: 0; visibility: hidden; }
+.btn { width: 75px; height: 75px; font-size: 12px; margin: 0 2px 5px 2px;}
+.btn-box { width: 75px; height: 75px; margin: 0 5px 0 0;}
+.btn-slider { width: 75px; height: 75px; font-size: 12px; padding: 16px 10px 10px 10px; margin: 0 2px 5px 2px;}
+span { line-height: 16px; }
+}
+
+@media (max-width: 800px) {
+#logo { width: 106px; height: 40px; margin: 30px 25px 0 25px;}
+}
+
+@media (min-device-width: 850px) and (max-device-width: 1200px) {
+.controls { width: 100%; }
+#video { width: 100%; }
+}
+
+@media (min-device-width: 1201px) and (min-width: 1201px) {
+.controls { width: 49%; margin: 5px;}
+#video { width: 49%; margin: 5px;}
+}
 
