@@ -8068,9 +8068,9 @@ var TopCodes = {
             console.log(vw);
             console.log(vh);
             var vc = {
-                // EH I've changed this to use updated API
                 audio: false, video: {
-                	aspectRatio: { exact: 1.33 },
+                	frameRate: { ideal: 10, max: 15 },
+                	//aspectRatio: { exact: 1.78 },
                     facingMode: mode,
                     //width: {ideal: vh, min: vh, max: vh},
                     //height: {ideal: vw, min: vw, max: vw}

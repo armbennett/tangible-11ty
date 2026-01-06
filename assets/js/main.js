@@ -21,25 +21,3 @@ function getUrlParameter(sParam) {
 let tangible = new Tangible();
 
 tangible.setupTangible();
-if (getUrlParameter("demo")) {
-    let testCodes = [
-        {"code": 55, x: 400, y: 200},
-        {"code": 109, x: 300, y: 200},
-
-        {"code": 31, x: 300, y: 250},
-        {"code": 167, x: 200, y: 250},
-
-        {"code": 55, x: 300, y: 300},
-        {"code": 109, x: 200, y: 300},
-
-        {"code": 31, x: 300, y: 350},
-        {"code": 171, x: 250, y: 350},
-
-        {"code": 59, x: 300, y: 400},
-        {"code": 31, x: 400, y: 450},
-        {"code": 173, x: 300, y: 450},
-        {"code": 59, x: 400, y: 500},
-    ];
-
-    tangible.currentCodes = testCodes;
-}

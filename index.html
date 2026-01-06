@@ -4,48 +4,77 @@
 <head>
   <title>TIBBL</title>
   <link rel="stylesheet" href="assets/css/w3.css">
-
+<script src="https://kit.fontawesome.com/aec9db4961.js" crossorigin="anonymous"></script>
   <script src="assets/js/topcodes.js"></script>
+  <script src="assets/js/howler.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="favicon.ico" type="image/x-icon"/>
 </head>
 
  <body>
  <div id="main">
-    	<div id="video">
-  <canvas id="video-canvas" width="480" height="700" ></canvas>
-	<div id="video-controls">
-    <button id="camera-button" class="duo">Camera On</button>
-  <button id="switch-view" class="duo">Switch View</button>
-  <button id="run" type="button" class="mono">Run</button>
+ <div id="top-bar">
+ 	<img id="logo" src="assets/img/tibbl-logo.png" aria-hidden="true" alt="TIBBL Logo" width="162" height="59">
+ 	<div id="buttons">
+ 		<label for="camera-button" class="btn-box"><input type="checkbox" id="camera-button" name="camera-button" class="hidden"><span class="btn-slider"><i class="fa-solid fa-camera fa-2xl"></i><h4 aria-hidden="true" style="margin-top: 0.5em;">Camera</h4></span></label>
+ 		<button id="run" type="button" class="btn"><i class="fa-solid fa-play fa-2xl"></i><h4 style="margin-top: 0.5em;">Run</h4></button>
+ 		<button id="read" type="button" class="btn"><i class="fa-brands fa-readme fa-2xl"></i><h4 style="margin-top: 0.5em;">Read</h4></button>
+ 		<button id="switch-view" class="btn"><i class="fa-solid fa-camera-rotate fa-2xl"></i><h4 style="margin-top: 0.5em;">Switch</h4></button>
+ 		<label for="remote-button" class="btn-box"><input type="checkbox" id="remote-button" name="remote-button" class="hidden"><span class="btn-slider"><i class="fa-solid fa-circle-play fa-2xl"></i><h4 aria-hidden="true" style="margin-top: 0.5em;">Remote</h4></span></label>
   </div>
+ </div>
+    	<div id="video">
+  <canvas id="video-canvas" width="640" height="480" ></canvas>
   </div>
   <div class="controls">
-  <h2>Sound Set</h2>
-       <select name="soundSets" id="soundSets">
-       <option value="GimmeGimmeGimme">Gimme Gimme Gimme</option>
-        <option value="Limerick3">Limerick 3</option>
-        <option value="Limerick1">Limerick 1</option>
-        <option value="Limerick2">Limerick 2</option> 
-        <option value="EyeOfTheTiger">Eye of the Tiger</option>
-        <option value="Popcorn">Popcorn</option>
-        <option value="BodyPercussion">Body Percussion</option>
+  <h2>Thread 1</h2>
+       <select name="soundSets1" id="soundSets1">
+       <option value="LowAndFX">LowAndFX</option>
+        <option value="High">High</option>
+        <option value="Drums">Drums</option>
+        <option value="NatureSounds">Nature Sounds</option>
     </select>
-	</div>
-<div class="controls">
- <h2>Challenges</h2>
- <div id="challenges" class="resultWindow"></div>
+   <h2>Thread 2</h2>
+       <select name="soundSets2" id="soundSets2">
+    	<option value="High">High</option>
+       <option value="LowAndFX">LowAndFX</option>
+        <option value="Drums">Drums</option>
+        <option value="NatureSounds">Nature Sounds</option>
+    </select>
+   <h2>Thread 3</h2>
+       <select name="soundSets3" id="soundSets3">
+    	<option value="Drums">Drums</option>
+       <option value="LowAndFX">LowAndFX</option>
+        <option value="High">High</option>
+        <option value="NatureSounds">Nature Sounds</option>
+    </select>
  </div>
- 
-  <div id="output">
-  <h2>Result</h2>
-  <div id="result" class="resultWindow"></div>
-   <br/>
-   <div class="w3-row">
+    <div class="controls">
+  <h2>Code</h2>
+<textarea id="code" name="code" rows="25" cols="60">
+THREAD 1
+PLAY 1
+LOOP 4 TIMES
+PLAY 4
+END LOOP
 
-  <h2>Codes</h2>
-  <div id="codes" class="resultWindow"></div>
-  </div>
+THREAD 2
+DELAY 2
+LOOP 4 TIMES
+PLAY 1
+END LOOP
 
+THREAD 3
+DELAY 2
+LOOP 4 TIMES
+PLAY 1
+END LOOP
+</textarea>
+ </div>
+
+<div id="footer">
+<a href="https://www.flaticon.com/free-icons/camera">Icons created by Freepik - Flaticon</a>
+</div>
 
 <script defer type="module" src="assets/js/main.js"></script>
 
