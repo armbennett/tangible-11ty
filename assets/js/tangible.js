@@ -1,6 +1,5 @@
 /*jshint esversion: 8 */
 
-
 export default class Tangible {
 
     constructor() {
@@ -78,6 +77,8 @@ export default class Tangible {
         this.t = 0;
         this.attempts = 0; //keep track of number of attempts to successfully scan and run program
         this.playActive = true; //used to prevent program executing multiple times in remote mode
+        this.funcText = "";
+        this.funcActive = false;
         this.soundSets = {
         	    LowAndFX: { 
         	    a: [0, 2000], 
@@ -139,7 +140,6 @@ export default class Tangible {
         canvas.height = canvas.width * heightRatio;
 
     }
-
 
     /**
      Parse the topcodes that are found.  Each item in the array topCodes has:
@@ -288,7 +288,7 @@ export default class Tangible {
                 if (parseInt(nextSymbol)) {
                     lineJS += "for (let x" + this.variableIncrementer + "=0; x" + this.variableIncrementer + " < " + nextSymbol + "; x" + this.variableIncrementer + "++){\n";
                 }
-            } else if (line[i] == "end") {
+            } else if (line[i] == "end" && line[i+1] == "loop") {
                     lineJS += "}\n";
             } else if (line[i] == "play") {
             	if (line[i+1] == "x") {
@@ -309,12 +309,14 @@ export default class Tangible {
         			lineJS += "this.codeThreads["+this.currThread+"].push('p');\n";
         		}
         	} else if (line[i] == "function") {
-            	lineJS += "function myFunction(){\n";
+            	this.funcActive = true;
             } else if (line[i] == "call") {
-            	lineJS += "myFunction();\n";
+            	lineJS += this.funcText;
+            } else if (line[i] == "end" && line[i+1] == "function") {
+            	this.funcActive = false;
             } else if (line[i] == "if") {
             	let condition = line[i+3];
-            	lineJS += "if (this.userInput>"+parseInt(condition)+") {\n";
+            	lineJS += "if (this.userInput<"+parseInt(condition)+") {\n";
             } else if (line[i] == "else") {
             	lineJS += "} else {\n";
             } else if (line[i] == "x") {
@@ -328,6 +330,10 @@ export default class Tangible {
             		let variable = line[i+2];
             		lineJS += "this.userInput = "+parseInt(variable)+";\n";
             }
+        if (this.funcActive) {
+        	this.funcText += lineJS;
+        	lineJS = "";
+        }
         return lineJS;
     }
     
@@ -369,18 +375,18 @@ export default class Tangible {
         		}
         		document.getElementById('code').value +="DELAY "+duration+"\n";
         	} else if (parsedCode == this.commands.FUNCTION) {
-            	lineJS += "function myFunction() {\n";
+            	this.funcActive = true;
             	document.getElementById('code').value += "FUNCTION\n";
             } else if (parsedCode == this.commands.ENDFUNCTION) {
-            	lineJS += "}\n";
+            	this.funcActive = false;
             	document.getElementById('code').value += "END FUNCTION\n";
             } else if (parsedCode == this.commands.FUNCTIONCALL) {
-            	lineJS += "myFunction();\n";
+            	lineJS += this.funcText;
             	document.getElementById('code').value += "CALL FUNCTION\n";
             } else if (parsedCode == this.commands.IF) {
             	let condition = this.decodeDial(line[i].angle);
-            	lineJS += "if (this.userInput>"+parseInt(condition)+") {\n";
-            	document.getElementById('code').value += "IF X > "+condition+"\n";
+            	lineJS += "if (this.userInput<"+parseInt(condition)+") {\n";
+            	document.getElementById('code').value += "IF X < "+condition+"\n";
             } else if (parsedCode == this.commands.ENDIF) {
             	lineJS += "}\n";
             	document.getElementById('code').value += "END IF\n";
@@ -402,6 +408,10 @@ export default class Tangible {
             	document.getElementById('code').value +="X = X - 1\n";
             }
             i += 1;
+            if (this.funcActive) {
+        		this.funcText += lineJS;
+        		lineJS = "";
+        	}
         }
         return lineJS;
     }
@@ -427,6 +437,7 @@ export default class Tangible {
         			this.playStart(this.threads[i],this.codeThreads[i]);
         		}
         	}
+        	this.funcText = "";
         } else if (this.attempts < 5) {
         	this.attempts += 1;
         	console.log(this.attempts);
@@ -449,6 +460,7 @@ export default class Tangible {
         		this.playStart(this.threads[i],this.codeThreads[i]);
         	}
         }
+        this.funcText = "";
     }
     
     //reads out the text code from the 'code' textarea
