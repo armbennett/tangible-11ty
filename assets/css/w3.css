@@ -25,14 +25,14 @@ h1,h2,h3,h4,h5,h6{font-family:"Segoe UI",Arial,sans-serif;font-weight:400;margin
 hr{border:0;border-top:1px solid #eee;margin:20px 0}
 
 body {
-	background-color: #aac9eb;
+	background-color: #cfe9e6;
 	color: #19736d;
 }
 
 #output { display: none }
 
 #top-bar {
-	background-color: #3874b6;
+	background-color: #215a7d;
 	width:100%;
 	padding: 5px 0 0 5px;
 	float: left;
@@ -40,7 +40,7 @@ body {
 }
 
 h2 {
-	background-color: #3874b6;
+	background-color: #215a7d;
 	color: #fff;
 	font-size:1.5em;
 }
@@ -119,7 +119,7 @@ input:checked + .btn-slider {
 	width: 100px;
 	height: 100px;
 	position: relative;
-	background-color: #3874b6; 
+	background-color: #215a7d; 
   border: solid 2px #fff;
   color: #fff;
   padding: 10px;
@@ -141,7 +141,7 @@ input:checked + .btn-slider {
   cursor: pointer;
   height: 100px;
   width: 100px;
-	background-color: #3874b6; 
+	background-color: #215a7d; 
   border: solid 2px #fff;
   color: #fff;
   padding: 22px 10px 10px 10px;
@@ -197,7 +197,7 @@ select {
 }
 
 #footer a{
-	color: #3874b6;
+	color: #215a7d;
 	font-size:0.75em;
 }
 
