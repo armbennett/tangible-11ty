@@ -45,9 +45,6 @@ export default class Tangible {
             151: "7",
             155: "8",
             157: "9",
-            167: "stop",
-            199: "bottom-left",
-            203: "bottom-right",
             205: this.commands.INCREMENT,
             211: this.commands.PLAYX,
             213: this.commands.DECREMENT,
@@ -56,8 +53,7 @@ export default class Tangible {
             333: this.commands.THREAD3,
             341: this.commands.FUNCTIONCALL,
             345: this.commands.VARIABLE,
-            355: this.commands.RANDOM,
-            357: "run"
+            355: this.commands.RANDOM
         };
         this.topcodeHeight = 40;
         this.topcodeWidth = 100;
@@ -66,19 +62,16 @@ export default class Tangible {
         this.variableIncrementer = 0;
 		this.mode = "environment";
 		this.cameraStatus = false; //camera on or off
-		this.remoteMode = false; //remote mode enabled or not
 		this.threads = [[],[],[]]; //holds the currently selected sound sets
 		this.codeThreads = [[],[],[]]; //the sounds to be played when program is run are queued here
         this.declarations = "";
-        this.left = false; //is the topcode in the bottom left of the board visible?
-        this.right = false; //is the topcode in the bottom right of the board visible?
         this.currentCodes = []; //topcodes currently seen
         this.currThread = 0; //used to keep track of current thread when parsing program
         this.t = 0;
         this.attempts = 0; //keep track of number of attempts to successfully scan and run program
-        this.playActive = true; //used to prevent program executing multiple times in remote mode
         this.funcText = "";
         this.funcActive = false;
+        this.multiTouch = false;
         this.soundSets = {
         	    LowAndFX: { 
         	    a: [0, 2000], 
@@ -484,10 +477,6 @@ export default class Tangible {
             var json = JSON.parse(jsonString);
             // get the list of topcodes from the JSON object
             var topcodes = json.topcodes;
-            var stop = false;
-            var run = false;
-            tangible.left = false;
-            tangible.right = false;
             // obtain a drawing context from the <canvas>
             // draw a circle over the top of each TopCode
             ctx.fillStyle = "rgba(255, 0, 0, 0.3)";   // very translucent red
@@ -497,19 +486,9 @@ export default class Tangible {
                 ctx.fill();
                 ctx.font = "26px Arial";
                 ctx.fillText(topcodes[i].code, topcodes[i].x, topcodes[i].y);
-                if (topcodes[i].code == 167) { stop = true; }
-                if (topcodes[i].code == 357) { run = true; }
-                if (topcodes[i].code == 199) { tangible.left = true; }
-                if (topcodes[i].code == 203) { tangible.right = true; }
-            }
-			if (tangible.remoteMode && run && !stop && tangible.playActive) {
-				tangible.runCode();
-				tangible.playActive = false;
-			} else if (tangible.remoteMode && !run && stop) {
-				tangible.playActive = true;
-			}
             tangible.currentCodes = topcodes;
             tangible.once = true;
+            }
         }, this);
 
         // Setup buttons
@@ -542,11 +521,10 @@ export default class Tangible {
         let remoteBtn = document.getElementById('remote-button');
         remoteBtn.onclick = function () {
         	if (document.getElementById('remote-button').checked) {
-        		this.remoteMode = true;
+        		this.multiTouch = true;
         	} else {
-        		this.remoteMode = false;
+        		this.multiTouch = false;
         	}
-        	console.log(remoteMode);
         }.bind(this);
         
         let cameraBtn = document.getElementById('camera-button');
@@ -574,12 +552,21 @@ export default class Tangible {
         	this.preloads(setSelect3.value,2);
         }.bind(this);
         
+       let multi = document.getElementById('main');
+       multi.addEventListener('touchstart', function (e) {
+  			if(e.touches.length == 3 && this.multiTouch) {
+    			if (document.getElementById('camera-button').checked) {
+    				this.runCode();
+    			} else {
+    				this.runTextCode();
+    			}
+  			}
+		}.bind(this))
+        
         // Run preloads
         this.preloads("LowAndFX",0);
         this.preloads("High",1);
         this.preloads("Drums",2);
         
         }
-        
-        
-        }
+}
