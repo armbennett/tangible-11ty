@@ -78,7 +78,7 @@ text-align: center;
 }
 
 .controls {
-border: solid 1px #3874b6;
+border: solid 1px #215a7d;
 background-color: #fff;
 text-align: center;
 margin: 0 0 10px 0;
@@ -87,7 +87,7 @@ width: 100%;
 }
 
 #video {
-border: solid 1px #3874b6;
+border: solid 1px #215a7d;
 background-color: #fff;
 margin: 0 0 10px 0;
 float: left;
@@ -95,23 +95,23 @@ width: 100%;
 }
 
 button:hover {
-  background-color: #aac9eb; 
-  border: solid 1px #3874b6;
-  color: #3874b6;
+  background-color: #cfe9e6; 
+  border: solid 1px #215a7d;
+  color: #215a7d;
   cursor:pointer;
 }
 
 input:hover + .btn-slider {
-  background-color: #aac9eb; 
-  border: solid 1px #3874b6;
-  color: #3874b6;
+  background-color: #cfe9e6; 
+  border: solid 1px #215a7d;
+  color: #215a7d;
   cursor:pointer;
 }
 
 input:checked + .btn-slider {
   background-color: #aac9eb; 
-  border: solid 1px #3874b6;
-  color: #3874b6;
+  border: solid 1px #215a7d;
+  color: #215a7d;
   cursor:pointer;
 }
 
