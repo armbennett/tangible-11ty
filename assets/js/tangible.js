@@ -82,7 +82,7 @@ export default class Tangible {
         	    f: [18000, 4000], 
         	    g: [22000, 4000], 
         	    h: [26000, 4000], 
-        	    p: [30000, 1000]},
+        	    p: [30000, 500]},
         	    High: { 
         	    a: [0, 4000], 
         	    b: [4000, 4000], 
@@ -92,7 +92,7 @@ export default class Tangible {
         	    f: [20000, 2000], 
         	    g: [22000, 4000], 
         	    h: [26000, 4000], 
-        	    p: [30000, 1000]},
+        	    p: [30000, 500]},
         	    Drums: { 
         	    a: [0, 4000], 
         	    b: [4000, 4000], 
@@ -102,7 +102,7 @@ export default class Tangible {
         	    f: [20000, 4000], 
         	    g: [24000, 4000], 
         	    h: [28000, 2000], 
-        	    p: [30000, 1000]},
+        	    p: [30000, 500]},
         	    NatureSounds: { 
         	    a: [0, 8000], 
         	    b: [8000, 8000], 
@@ -112,7 +112,37 @@ export default class Tangible {
         	    f: [40000, 8000], 
         	    g: [48000, 8000], 
         	    h: [56000, 8000], 
-        	    p: [64000, 1000]}
+        	    p: [64000, 500]},
+        	    OdeToJoy: { 
+        	    a: [0, 1739], 
+        	    b: [1739, 1716], 
+        	    c: [3455, 1716], 
+        	    d: [5171, 1714],
+        	    e: [6886, 1712],
+        	    f: [8598, 1281], 
+        	    g: [9879, 1716], 
+        	    h: [11595, 2141], 
+        	    p: [13735, 500]},
+        	    PopGoesTheWeasel: { 
+        	    a: [0, 1166], 
+        	    b: [1166, 1137], 
+        	    c: [2303, 593], 
+        	    d: [2896, 569],
+        	    e: [3464, 1720],
+        	    f: [5184, 2091], 
+        	    g: [7275, 2477], 
+        	    h: [9752, 2862], 
+        	    p: [12614, 500]},
+        	    OhDear: { 
+        	    a: [0, 2205], 
+        	    b: [2205, 2182], 
+        	    c: [4387, 2182], 
+        	    d: [6569, 2178],
+        	    e: [8747, 2187],
+        	    f: [10934, 2150], 
+        	    g: [13084, 2214],
+        	    h: [15298, 2178], 
+        	    p: [17476, 500]},
         }
     }
      
@@ -283,6 +313,8 @@ export default class Tangible {
                 }
             } else if (line[i] == "end" && line[i+1] == "loop") {
                     lineJS += "}\n";
+            } else if (line[i] == "end" && line[i+1] == "if") {
+                    lineJS += "}\n";
             } else if (line[i] == "play") {
             	if (line[i+1] == "x") {
             		lineJS += "this.codeThreads["+this.currThread+"].push(String.fromCharCode(this.userInput+96));\n";
@@ -317,11 +349,12 @@ export default class Tangible {
             		lineJS += "this.userInput = Math.random() * (8 - 1) + 1;\n";
             	} else if (line[i+3] == "+") {
             		lineJS += "this.userInput +=1;\n";
-            	} else if (line[i+3] == "+") {
+            	} else if (line[i+3] == "-") {
             		lineJS += "this.userInput -=1;\n";
-            	}
+            	} else {
             		let variable = line[i+2];
             		lineJS += "this.userInput = "+parseInt(variable)+";\n";
+            		}
             }
         if (this.funcActive) {
         	this.funcText += lineJS;
