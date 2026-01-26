@@ -71,48 +71,7 @@ export default class Tangible {
         this.attempts = 0; //keep track of number of attempts to successfully scan and run program
         this.funcText = "";
         this.funcActive = false;
-        this.multiTouch = false;
         this.soundSets = {
-        	    LowAndFX: { 
-        	    a: [0, 2000], 
-        	    b: [2000, 4000], 
-        	    c: [6000, 4000], 
-        	    d: [10000, 4000],
-        	    e: [14000, 4000],
-        	    f: [18000, 4000], 
-        	    g: [22000, 4000], 
-        	    h: [26000, 4000], 
-        	    p: [30000, 500]},
-        	    High: { 
-        	    a: [0, 4000], 
-        	    b: [4000, 4000], 
-        	    c: [8000, 4000], 
-        	    d: [12000, 4000],
-        	    e: [16000, 4000],
-        	    f: [20000, 2000], 
-        	    g: [22000, 4000], 
-        	    h: [26000, 4000], 
-        	    p: [30000, 500]},
-        	    Drums: { 
-        	    a: [0, 4000], 
-        	    b: [4000, 4000], 
-        	    c: [8000, 4000], 
-        	    d: [12000, 4000],
-        	    e: [16000, 4000],
-        	    f: [20000, 4000], 
-        	    g: [24000, 4000], 
-        	    h: [28000, 2000], 
-        	    p: [30000, 500]},
-        	    NatureSounds: { 
-        	    a: [0, 8000], 
-        	    b: [8000, 8000], 
-        	    c: [16000, 8000], 
-        	    d: [24000, 8000],
-        	    e: [32000, 8000],
-        	    f: [40000, 8000], 
-        	    g: [48000, 8000], 
-        	    h: [56000, 8000], 
-        	    p: [64000, 500]},
         	    OdeToJoy: { 
         	    a: [0, 1739], 
         	    b: [1739, 1716], 
@@ -122,27 +81,7 @@ export default class Tangible {
         	    f: [8598, 1281], 
         	    g: [9879, 1716], 
         	    h: [11595, 2141], 
-        	    p: [13735, 500]},
-        	    PopGoesTheWeasel: { 
-        	    a: [0, 1166], 
-        	    b: [1166, 1137], 
-        	    c: [2303, 593], 
-        	    d: [2896, 569],
-        	    e: [3464, 1720],
-        	    f: [5184, 2091], 
-        	    g: [7275, 2477], 
-        	    h: [9752, 2862], 
-        	    p: [12614, 500]},
-        	    OhDear: { 
-        	    a: [0, 2205], 
-        	    b: [2205, 2182], 
-        	    c: [4387, 2182], 
-        	    d: [6569, 2178],
-        	    e: [8747, 2187],
-        	    f: [10934, 2150], 
-        	    g: [13084, 2214],
-        	    h: [15298, 2178], 
-        	    p: [17476, 500]},
+        	    p: [13735, 1000]},
         	    FurElise: { 
         	    a: [0, 1241], 
         	    b: [1241, 1237], 
@@ -152,26 +91,58 @@ export default class Tangible {
         	    f: [6163, 1220], 
         	    g: [7382, 1215],
         	    h: [8597, 1220], 
-        	    p: [9817, 500]},
-        	    MajorGeneral: { 
-        	    a: [0, 504], 
-        	    b: [527, 505], 
-        	    c: [1032, 496], 
-        	    d: [1529, 992],
-        	    e: [2522, 496],
-        	    f: [3018, 1006], 
-        	    g: [4024, 1997],
-        	    h: [6021, 1937], 
-        	    p: [7959, 500]},
+        	    p: [9817, 1000]},
+        	    MusicLoops1: { 
+        	    a: [0, 1000], 
+        	    b: [1000, 1000], 
+        	    c: [2000, 1000], 
+        	    d: [3000, 1000],
+        	    e: [4000, 4000],
+        	    f: [8000, 4000], 
+        	    g: [12000, 4000],
+        	    h: [16000, 4000], 
+        	    p: [20000, 1000]},
+        	    Notifications: { 
+        	    a: [0, 1000], 
+        	    b: [1000, 1000], 
+        	    c: [2000, 1000], 
+        	    d: [3000, 1000],
+        	    e: [4000, 1000],
+        	    f: [5000, 1000], 
+        	    g: [6000, 1000],
+        	    h: [7000, 1000], 
+        	    p: [8000, 1000]},
+        	    Numbers: { 
+        	    a: [0, 1000], 
+        	    b: [1000, 1000], 
+        	    c: [2000, 1000], 
+        	    d: [3000, 1000],
+        	    e: [4000, 1000],
+        	    f: [5000, 1000], 
+        	    g: [6000, 1000],
+        	    h: [7000, 1000], 
+        	    p: [8000, 1000]},
+        	    Mystery: { 
+        	    a: [0, 4000], 
+        	    b: [4000, 2000], 
+        	    c: [6000, 4000], 
+        	    d: [10000, 4000],
+        	    e: [14000, 4000],
+        	    f: [18000, 4000], 
+        	    g: [22000, 2000],
+        	    h: [24000, 8000], 
+        	    p: [31998, 1000]},
         }
     }
      
      //loads sound sets
     preloads(soundSet,t) {
+    	const isIOS = /iP(ad|hone|od)/.test(navigator.userAgent);
 		var thread = new Howl({
   		src: ["assets/sound/"+soundSet+".mp3"],
-  		volume: 0.2,
-  		sprite: this.soundSets[soundSet]
+  		volume: 0.4,
+  		sprite: this.soundSets[soundSet],
+  		//html5: isIOS
 		});
 		this.threads[t] = thread;
     }
@@ -183,6 +154,25 @@ export default class Tangible {
         canvas.height = canvas.width * heightRatio;
 
     }
+    
+    stopAllSounds() {
+		this.threads[0].off('end');
+		this.threads[1].off('end');
+		this.threads[2].off('end');
+		this.threads[0].stop();
+		this.threads[1].stop();
+		this.threads[2].stop();
+    }
+
+    isAudioPlaying() {
+  		var sounds = Howler._howls;
+  		for (var i = 0; i < sounds.length; i++) {
+    		if (sounds[i].playing()) {
+      			return true;
+    		}
+  		}
+  		return false;
+	}	
 
     /**
      Parse the topcodes that are found.  Each item in the array topCodes has:
@@ -190,6 +180,7 @@ export default class Tangible {
      @param topCodes Found codes
      @return text translations of code
      */
+     
     parseCodesAsText(topCodes) {
         let outputString = "";
         let grid = this.sortTopCodesIntoGrid(topCodes);
@@ -263,19 +254,19 @@ export default class Tangible {
      @param topCodes Found codes
      @return text translations of code
      */
-    parseCodesAsJavascript(topCodes) {
-        let outputJS = "";
-        this.codeThreads = [[],[],[],[]];
+    parseCodesAsText(topCodes) {
+        let outputText = "";
+        this.codeThreads = [[],[],[]];
         let grid = this.sortTopCodesIntoGrid(topCodes);
         for (let i = 0; i < grid.length; i++) {
-            outputJS += this.parseTopCodeLine(grid[i]);
+            outputText += this.parseTopCodeLine(grid[i]);
         }
-        return outputJS;
+        return outputText;
     }
     //Parse text code as javascript
     parseTextAsJavascript(text) {
         let outputJS = "";
-        this.codeThreads = [[],[],[],[]];
+        this.codeThreads = [[],[],[]];
  		var codeArray = text.split('\n');
  		for (let i = 0; i < codeArray.length; i++) {
  			codeArray[i] = codeArray[i].split(" ");
@@ -293,9 +284,49 @@ export default class Tangible {
   				s.play(l[0]);
   			} else {
   				l = [];
+  				this.playingSounds = [];
   			}
 		});
 	}
+	
+	//plays and records current program
+	recordProgram(s,l,d) {
+		const mediaDest = Howler.ctx.createMediaStreamDestination();
+		Howler.masterGain.connect( mediaDest );
+
+		// set up media recorder to record output
+		const audioChunks = []
+		const mediaRecorder = new MediaRecorder( mediaDest.stream, { mimeType: 'audio/webm' } );
+
+		mediaRecorder.onstart = (event) =>
+  		{ console.log('Started recording Howl output...') };
+		mediaRecorder.ondataavailable = (event) =>
+  		{ audioChunks.push( event.data ) };
+		mediaRecorder.onstop = (event) =>
+  		{ const blob = new Blob((audioChunks), {
+        	type: 'audio/webm'
+      	});
+        	const anchor = document.createElement('a');
+      		document.body.appendChild(anchor);
+      		anchor.style = 'display: none';
+      		const url = window.URL.createObjectURL(blob);
+      		anchor.href = url;
+      		anchor.download = 'myProgram.webm';
+      		anchor.click();
+      		window.URL.revokeObjectURL(url);
+  		}
+  		if (d) { mediaRecorder.start(); }
+  		s.play(l[0]);
+		s.on('end', function(){
+  			l.shift();
+ 			if (l.length > 0) {
+  				s.play(l[0]);
+  			} else {
+  				l = [];
+  				if (d) { mediaRecorder.stop(); }
+  			}
+		});
+  	};
     
     //converts the angle value of the topcode to a number between 1 and 8
     decodeDial(ang) {
@@ -383,83 +414,59 @@ export default class Tangible {
         return lineJS;
     }
     
-    //parses each topcode to a line of javascript + add a text code version to the 'code' textarea
+    //parses each topcode to a line of text code
     parseTopCodeLine(line) {
-        let lineJS = "\n";
+        let lineText = "";
         let i = 0;
         while (i < line.length) {
             let parsedCode = this.codeLibrary[line[i].code];
             if (parsedCode == this.commands.LOOP) {
 						let nextSymbol = this.decodeDial(line[i].angle);
                         if (parseInt(nextSymbol)) {
-                            lineJS += "for (let x" + this.variableIncrementer + "=0; x" + this.variableIncrementer + " < " + nextSymbol + "; x" + this.variableIncrementer + "++){\n";
-                            document.getElementById('code').value += "LOOP "+nextSymbol+" TIMES\n";
+                            lineText += "LOOP "+nextSymbol+" TIMES\n";
                         }
             } else if (parsedCode == this.commands.ENDLOOP) {
-                    lineJS += "} \n";
-                    document.getElementById('code').value += "END LOOP\n";
+                    lineText += "END LOOP\n";
             } else if (parsedCode == this.commands.PLAY) {
 						let letter = this.decodeDial(line[i].angle);
-                        lineJS += "this.codeThreads["+this.currThread+"].push('" + String.fromCharCode(parseInt(letter)+96) + "');\n";
-                        document.getElementById('code').value +="PLAY "+letter+"\n";
+                        lineText +="PLAY "+letter+"\n";
             } else if (parsedCode == this.commands.PLAYX) {
-                        lineJS += "this.codeThreads["+this.currThread+"].push(String.fromCharCode(this.userInput+96));\n";
-                        document.getElementById('code').value += "PLAY X\n";
+                        lineText += "PLAY X\n";
             } else if (parsedCode == this.commands.THREAD1) {
-            	document.getElementById('code').value += "THREAD 1\n";
-            	this.currThread = 0;
+            	lineText += "THREAD 1\n";
             } else if (parsedCode == this.commands.THREAD2) {
-            	document.getElementById('code').value += "THREAD 2\n";
-            	this.currThread = 1;
+            	lineText += "THREAD 2\n";
             } else if (parsedCode == this.commands.THREAD3) {
-            	document.getElementById('code').value += "THREAD 3\n";
-            	this.currThread = 2;
+            	lineText += "THREAD 3\n";
             } else if (parsedCode == this.commands.DELAY) {
             	let duration = this.decodeDial(line[i].angle);
-            	for (let i = 0; i < parseInt(duration); i++) {
-        			lineJS += "this.codeThreads["+this.currThread+"].push('p');\n";
-        		}
-        		document.getElementById('code').value +="DELAY "+duration+"\n";
+        		lineText +="DELAY "+duration+"\n";
         	} else if (parsedCode == this.commands.FUNCTION) {
-            	this.funcActive = true;
-            	document.getElementById('code').value += "FUNCTION\n";
+            	lineText += "FUNCTION\n";
             } else if (parsedCode == this.commands.ENDFUNCTION) {
-            	this.funcActive = false;
-            	document.getElementById('code').value += "END FUNCTION\n";
+            	lineText += "END FUNCTION\n";
             } else if (parsedCode == this.commands.FUNCTIONCALL) {
-            	lineJS += this.funcText;
-            	document.getElementById('code').value += "CALL FUNCTION\n";
+            	lineText += "CALL FUNCTION\n";
             } else if (parsedCode == this.commands.IF) {
             	let condition = this.decodeDial(line[i].angle);
-            	lineJS += "if (this.userInput<"+parseInt(condition)+") {\n";
-            	document.getElementById('code').value += "IF X < "+condition+"\n";
+            	lineText += "IF X < "+condition+"\n";
             } else if (parsedCode == this.commands.ENDIF) {
-            	lineJS += "}\n";
-            	document.getElementById('code').value += "END IF\n";
+            	lineText += "END IF\n";
             } else if (parsedCode == this.commands.ELSE) {
-            	lineJS += "} else {\n";
-            	document.getElementById('code').value += "ELSE\n";
+            	lineText += "ELSE\n";
             } else if (parsedCode == this.commands.VARIABLE) {
             	let variable = this.decodeDial(line[i].angle);
-            	lineJS += "this.userInput = "+parseInt(variable)+";\n";
-            	document.getElementById('code').value += "X = "+variable+"\n";
+            	lineText += "X = "+variable+"\n";
             } else if (parsedCode == this.commands.RANDOM) {
-            	lineJS += "this.userInput = Math.random() * (8 - 1) + 1;\n";
-            	document.getElementById('code').value +="X = RANDOM\n";
+            	lineText +="X = RANDOM\n";
             } else if (parsedCode == this.commands.INCREMENT) {
-            	lineJS += "this.userInput +=1;\n";
-            	document.getElementById('code').value +="X = X + 1\n";
+            	lineText +="X = X + 1\n";
             } else if (parsedCode == this.commands.DECREMENT) {
-            	lineJS += "this.userInput -=1;\n";
-            	document.getElementById('code').value +="X = X - 1\n";
+            	lineText +="X = X - 1\n";
             }
             i += 1;
-            if (this.funcActive) {
-        		this.funcText += lineJS;
-        		lineJS = "";
-        	}
         }
-        return lineJS;
+        return lineText;
     }
     
     evalTile(tileCode, context) {
@@ -467,36 +474,27 @@ export default class Tangible {
         return true;
     }
 
-	//runs scanned code, only runs if both left and right topcodes are visible, will make 5 attempts
-    runCode() {
+	//scans the tangible code and returns text code
+    scanCode() {
     	var self = this;
     	if (this.currentCodes) {
         //if (this.currentCodes && this.left && this.right) {
-        	document.getElementById('code').value = "";
-            let parsedJS = this.declarations + this.parseCodesAsJavascript(this.currentCodes);
-            console.log(parsedJS);
+            let parsedText = this.declarations + this.parseCodesAsText(this.currentCodes);
+            console.log(parsedText);
             this.attempts = 0;
-            let parsedLines = [];
-            parsedLines.push(this.evalTile(parsedJS, this));
-            for (let i = 0; i < this.codeThreads.length; i++) {
-            	if (this.codeThreads[i].length > 0) {
-        			this.playStart(this.threads[i],this.codeThreads[i]);
-        		}
-        	}
-        	this.funcText = "";
+            return parsedText;
         } else if (this.attempts < 5) {
         	this.attempts += 1;
         	console.log(this.attempts);
         	setTimeout(function() {
-  				self.runCode();
+  				let parsedText = self.scanCode();
 			}, 100);
         }
     }
     
-    //runs the text code from the 'code' text area
-    runTextCode() {
-     	var codeText = document.getElementById("code");
- 		var code = codeText.value.toLowerCase();
+    //runs the text code
+    runTextCode(codeText) {
+ 		var code = codeText.toLowerCase();
         let parsedJS = this.parseTextAsJavascript(code);
         console.log(parsedJS);
         let parsedLines = [];
@@ -509,10 +507,45 @@ export default class Tangible {
         this.funcText = "";
     }
     
-    //reads out the text code from the 'code' textarea
-    readCode() {
-    	var codeText = document.getElementById("code");
- 		var code = codeText.value.toLowerCase();
+    getThreadDuration() {
+    	let durations = [];
+    	for (let i = 0; i < this.codeThreads.length; i++) {
+            if (this.codeThreads[i].length > 0) {
+            	let temp = 0;
+            	for (let x = 0; x < this.codeThreads[i].length; x++) {
+        			temp += this.threads[i]._sprite[this.codeThreads[i][x]][1];
+        		}
+        		durations.push(temp);
+        	} else {
+        		durations.push(0);
+        	}
+        }
+    	return durations;
+    }
+    
+    recordCode(codeText) {
+ 		var code = codeText.toLowerCase();
+        let parsedJS = this.parseTextAsJavascript(code);
+        let parsedLines = [];
+        parsedLines.push(this.evalTile(parsedJS, this));
+        let duration = this.getThreadDuration();
+		let longestThread = duration.indexOf(Math.max.apply(Math, duration));
+		console.log(longestThread);
+        for (let i = 0; i < this.codeThreads.length; i++) {
+            if (this.codeThreads[i].length > 0) {
+            	if (i == longestThread) {
+            		this.recordProgram(this.threads[i],this.codeThreads[i],true);
+            	} else {
+            		this.recordProgram(this.threads[i],this.codeThreads[i],false);
+            	}
+        	}
+        }
+        this.funcText = "";
+    }
+    
+    //reads out the text code
+    readCode(codeText) {
+ 		var code = codeText.toLowerCase();
     	var codeArray = code.split('\n');
 		for (let i = 0; i < codeArray.length; i++) {
             	var utterance = new SpeechSynthesisUtterance(codeArray[i]);
@@ -542,84 +575,6 @@ export default class Tangible {
             tangible.currentCodes = topcodes;
             tangible.once = true;
             }
-        }, this);
-
-        // Setup buttons
-        //runs scanned code if camera is active, otherwise run text code from 'code' textarea
-        let runButton = document.getElementById('run');
-        runButton.onclick = function () {
-    		if (document.getElementById('camera-button').checked) {
-    			this.runCode();
-    		} else {
-    			this.runTextCode();
-    		}
-        }.bind(this);
-        
-        let readButton = document.getElementById('read');
-        readButton.onclick = function () {
-			this.readCode();
-        }.bind(this);
-        
-        let switchBtn = document.getElementById('switch-view');
-        switchBtn.onclick = function () {
-        	TopCodes.stopVideoScan('video-canvas');
-        	if (this.mode === "user") {
-        		this.mode = "environment";
-        	} else {
-        		this.mode = "user";
-        	}
-        	TopCodes.startStopVideoScan('video-canvas',this.mode);
-        }.bind(this);
-        
-        let remoteBtn = document.getElementById('remote-button');
-        remoteBtn.onclick = function () {
-        	if (document.getElementById('remote-button').checked) {
-        		this.multiTouch = true;
-        	} else {
-        		this.multiTouch = false;
-        	}
-        }.bind(this);
-        
-        let cameraBtn = document.getElementById('camera-button');
-        cameraBtn.onclick = function () {
-    		if (document.getElementById('camera-button').checked) {
-    			this.cameraStatus = true;
-    		} else {
-    			this.cameraStatus = false;
-    		}
-            TopCodes.startStopVideoScan('video-canvas',this.mode);
-        }.bind(this);
-        
-        let setSelect1 = document.getElementById('soundSets1');
-        setSelect1.onchange = function () {
-        	this.preloads(setSelect1.value,0);
-        }.bind(this);
-        
-        let setSelect2 = document.getElementById('soundSets2');
-        setSelect2.onchange = function () {
-        	this.preloads(setSelect2.value,1);
-        }.bind(this);
-        
-        let setSelect3 = document.getElementById('soundSets3');
-        setSelect3.onchange = function () {
-        	this.preloads(setSelect3.value,2);
-        }.bind(this);
-        
-       let multi = document.getElementById('main');
-       multi.addEventListener('touchstart', function (e) {
-  			if(e.touches.length == 3 && this.multiTouch) {
-    			if (document.getElementById('camera-button').checked) {
-    				this.runCode();
-    			} else {
-    				this.runTextCode();
-    			}
-  			}
-		}.bind(this))
-        
-        // Run preloads
-        this.preloads("LowAndFX",0);
-        this.preloads("High",1);
-        this.preloads("Drums",2);
-        
+        }, this);     
         }
 }
