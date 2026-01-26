@@ -7,6 +7,9 @@
 <script src="https://kit.fontawesome.com/aec9db4961.js" crossorigin="anonymous"></script>
   <script src="assets/js/topcodes.js"></script>
   <script src="assets/js/howler.js"></script>
+  <script src="assets/js/iosunmute.js"></script>
+  <script src="assets/js/jquery-4.0.0.slim.min.js"></script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="favicon.ico" type="image/x-icon"/>
 </head>
@@ -17,10 +20,9 @@
  	<img id="logo" src="assets/img/tibbl-logo.png" aria-hidden="true" alt="TIBBL Logo" width="162" height="59">
  	<div id="buttons">
  		<label for="camera-button" class="btn-box"><input type="checkbox" id="camera-button" name="camera-button" class="hidden"><span class="btn-slider"><i class="fa-solid fa-camera fa-2xl"></i><h4 aria-hidden="true" style="margin-top: 0.5em;">Camera</h4></span></label>
- 		<button id="run" type="button" class="btn"><i class="fa-solid fa-play fa-2xl"></i><h4 style="margin-top: 0.5em;">Run</h4></button>
+ 		<button id="run" type="button" class="btn"><i class="fa-solid fa-play fa-2xl"></i><h4 style="margin-top: 0.5em;">Run/Stop</h4></button>
  		<button id="read" type="button" class="btn"><i class="fa-brands fa-readme fa-2xl"></i><h4 style="margin-top: 0.5em;">Read</h4></button>
- 		<button id="switch-view" class="btn"><i class="fa-solid fa-camera-rotate fa-2xl"></i><h4 style="margin-top: 0.5em;">Switch</h4></button>
- 		<label for="remote-button" class="btn-box"><input type="checkbox" id="remote-button" name="multi-touch" class="hidden"><span class="btn-slider"><i class="fa-solid fa-hand fa-2xl"></i><h4 aria-hidden="true" style="margin-top: 0.5em;">Touch</h4></span></label>
+ 		<button id="record" class="btn"><i class="fa-solid fa-circle-arrow-down fa-2xl"></i><h4 style="margin-top: 0.5em;">Export</h4></button>
   </div>
  </div>
     	<div id="video">
@@ -29,60 +31,45 @@
   <div class="controls">
   <h2>Thread 1</h2>
        <select name="soundSets1" id="soundSets1">
-       <option value="LowAndFX">LowAndFX</option>
-        <option value="High">High</option>
-        <option value="Drums">Drums</option>
-        <option value="NatureSounds">Nature Sounds</option>
+       <option value="MusicLoops1">Music Loops 1</option>
+        <option value="Mystery">Mystery</option>
+        <option value="Numbers">Numbers</option>
+        <option value="Notifications">Notifications</option>
         <option value="OdeToJoy">Ode to Joy</option>
-        <option value="PopGoesTheWeasel">Pop Goes the Weasel</option>
-        <option value="OhDear">Oh Dear</option>
         <option value="FurElise">Für Elise</option>
-        <option value="MajorGeneral">Major-General</option>
     </select>
    <h2>Thread 2</h2>
        <select name="soundSets2" id="soundSets2">
-    	<option value="High">High</option>
-       <option value="LowAndFX">LowAndFX</option>
-        <option value="Drums">Drums</option>
-        <option value="NatureSounds">Nature Sounds</option>
+       <option value="MusicLoops1">Music Loops 1</option>
+        <option value="Mystery">Mystery</option>
+        <option value="Numbers">Numbers</option>
+        <option value="Notifications">Notifications</option>
         <option value="OdeToJoy">Ode to Joy</option>
-        <option value="PopGoesTheWeasel">Pop Goes the Weasel</option>
-        <option value="OhDear">Oh Dear</option>
         <option value="FurElise">Für Elise</option>
-        <option value="MajorGeneral">Major-General</option>
     </select>
    <h2>Thread 3</h2>
        <select name="soundSets3" id="soundSets3">
-    	<option value="Drums">Drums</option>
-       <option value="LowAndFX">LowAndFX</option>
-        <option value="High">High</option>
-        <option value="NatureSounds">Nature Sounds</option>
+       <option value="MusicLoops1">Music Loops 1</option>
+        <option value="Mystery">Mystery</option>
+        <option value="Numbers">Numbers</option>
+        <option value="Notifications">Notifications</option>
         <option value="OdeToJoy">Ode to Joy</option>
-        <option value="PopGoesTheWeasel">Pop Goes the Weasel</option>
-        <option value="OhDear">Oh Dear</option>
         <option value="FurElise">Für Elise</option>
-        <option value="MajorGeneral">Major-General</option>
     </select>
  </div>
     <div class="controls">
   <h2>Code</h2>
 <textarea id="code" name="code" rows="25" cols="60">
 THREAD 1
-PLAY 1
 LOOP 4 TIMES
-PLAY 4
+PLAY 5
 END LOOP
+PLAY 7
 
 THREAD 2
 DELAY 4
-LOOP 4 TIMES
-PLAY 1
-END LOOP
-
-THREAD 3
-DELAY 4
-LOOP 4 TIMES
-PLAY 1
+LOOP 3 TIMES
+PLAY 8
 END LOOP
 </textarea>
  </div>
@@ -92,7 +79,6 @@ END LOOP
 </div>
 
 <script defer type="module" src="assets/js/main.js"></script>
-
 
 </div>
 </body>
