@@ -399,12 +399,12 @@ export default class Tangible {
             	if (line[i+2] == "random") {
             		lineJS += "this.userInput = Math.random() * (8 - 1) + 1;\n";
             	} else if (line[i+3] == "+") {
-            		lineJS += "this.userInput +=1;\n";
+            		lineJS += "this.userInput = (this.userInput+1);\nif (this.userInput > 8) { this.userInput = 1 };\n";
             	} else if (line[i+3] == "-") {
-            		lineJS += "this.userInput -=1;\n";
+            		lineJS += "this.userInput = (this.userInput-1);\nif (this.userInput < 1) { this.userInput = 8 };\n";
             	} else {
             		let variable = line[i+2];
-            		lineJS += "this.userInput = "+parseInt(variable)+";\n";
+            		lineJS += "this.userInput = "+(parseInt(variable))+";\n";
             		}
             }
         if (this.funcActive) {
