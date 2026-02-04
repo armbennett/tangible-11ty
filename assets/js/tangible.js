@@ -505,6 +505,7 @@ export default class Tangible {
         	}
         }
         this.funcText = "";
+        this.currThread = 0;
     }
     
     getThreadDuration() {
