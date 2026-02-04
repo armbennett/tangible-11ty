@@ -140,7 +140,7 @@ export default class Tangible {
     	const isIOS = /iP(ad|hone|od)/.test(navigator.userAgent);
 		var thread = new Howl({
   		src: ["assets/sound/"+soundSet+".mp3"],
-  		volume: 0.4,
+  		volume: 1,
   		sprite: this.soundSets[soundSet],
   		//html5: isIOS
 		});
