@@ -117,6 +117,14 @@ function hideExport(s) {
 	}
 }
 
+
+if (urlParams.has('flipped')) {
+    tangible.flipped = true;
+    document.getElementById("video-canvas").style.transform = "scale(1, -1)";
+    document.getElementById("video-canvas").width = 1280;
+    document.getElementById("video-canvas").height = 720;
+}
+
 hideVideo();
 		
 tangible.preloads("MusicLoops1",0);
