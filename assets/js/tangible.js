@@ -55,6 +55,7 @@ export default class Tangible {
             345: this.commands.VARIABLE,
             355: this.commands.RANDOM
         };
+        this.flipped = false;
         this.topcodeHeight = 40;
         this.topcodeWidth = 100;
         this.userInput = 0; // value of TIBBL variable stored here
@@ -137,12 +138,10 @@ export default class Tangible {
      
      //loads sound sets
     preloads(soundSet,t) {
-    	const isIOS = /iP(ad|hone|od)/.test(navigator.userAgent);
 		var thread = new Howl({
   		src: ["assets/sound/"+soundSet+".mp3"],
   		volume: 1,
   		sprite: this.soundSets[soundSet],
-  		//html5: isIOS
 		});
 		this.threads[t] = thread;
     }
@@ -219,6 +218,12 @@ export default class Tangible {
         }
         // Add last line and return
         grid.push(line);
+        if (this.flipped) {
+        grid.reverse();
+        for (let i = 0; i < grid.length; i++) {
+        	grid[i].reverse();
+        }
+        }
         return grid;
     }
 
@@ -331,22 +336,42 @@ export default class Tangible {
     //converts the angle value of the topcode to a number between 1 and 8
     decodeDial(ang) {
         let letter = "";
-        if (ang < 0.43) {
-            letter = "5";
-        } else if (ang < 1.4) {
-            letter = "4";
-        } else if (ang < 1.98) {
-            letter = "3";
-        } else if (ang < 2.85) {
-            letter = "2";
-        } else if (ang < 3.62) {
-            letter = "1";
-        } else if (ang < 4.30) {
-            letter = "8";
-        } else if (ang < 5.07) {
-            letter = "7";
+        if (this.flipped) {
+			if (ang < 0.43) {
+				letter = "1";
+			} else if (ang < 1.4) {
+				letter = "8";
+			} else if (ang < 1.98) {
+				letter = "7";
+			} else if (ang < 2.85) {
+				letter = "6";
+			} else if (ang < 3.62) {
+				letter = "5";
+			} else if (ang < 4.30) {
+				letter = "4";
+			} else if (ang < 5.07) {
+				letter = "3";
+			} else {
+				letter = "2";
+			}
         } else {
-            letter = "6";
+			if (ang < 0.43) {
+				letter = "5";
+			} else if (ang < 1.4) {
+				letter = "4";
+			} else if (ang < 1.98) {
+				letter = "3";
+			} else if (ang < 2.85) {
+				letter = "2";
+			} else if (ang < 3.62) {
+				letter = "1";
+			} else if (ang < 4.30) {
+				letter = "8";
+			} else if (ang < 5.07) {
+				letter = "7";
+			} else {
+				letter = "6";
+			} 
         }
         //console.log(ang);
         //console.log(letter);
