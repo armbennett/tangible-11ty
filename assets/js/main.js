@@ -120,6 +120,7 @@ function hideExport(s) {
 
 if (urlParams.has('flipped')) {
     tangible.flipped = true;
+    tangible.rotate = 180;
     document.getElementById("video-canvas").style.transform = "scale(1, -1)";
     document.getElementById("video-canvas").width = 1280;
     document.getElementById("video-canvas").height = 720;

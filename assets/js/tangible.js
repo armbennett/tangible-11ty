@@ -336,43 +336,36 @@ export default class Tangible {
     //converts the angle value of the topcode to a number between 1 and 8
     decodeDial(ang) {
         let letter = "";
-        if (this.flipped) {
+        let values = {"a":"1","b":"2","c":"3","d":"4","e":"5","f":"6","g":"7","h":"8"}
+        let ninety = {"a":"3","b":"4","c":"5","d":"6","e":"7","f":"8","g":"1","h":"2"}
+        let oneeighty = {"a":"5","b":"6","c":"7","d":"8","e":"1","f":"2","g":"3","h":"4"}
+        let twoseventy = {"a":"7","b":"8","c":"1","d":"2","e":"3","f":"4","g":"5","h":"6"}
 			if (ang < 0.43) {
-				letter = "1";
+				letter = "e";
 			} else if (ang < 1.4) {
-				letter = "8";
+				letter = "d";
 			} else if (ang < 1.98) {
-				letter = "7";
+				letter = "c";
 			} else if (ang < 2.85) {
-				letter = "6";
+				letter = "b";
 			} else if (ang < 3.62) {
-				letter = "5";
+				letter = "a";
 			} else if (ang < 4.30) {
-				letter = "4";
+				letter = "h";
 			} else if (ang < 5.07) {
-				letter = "3";
+				letter = "g";
 			} else {
-				letter = "2";
-			}
-        } else {
-			if (ang < 0.43) {
-				letter = "5";
-			} else if (ang < 1.4) {
-				letter = "4";
-			} else if (ang < 1.98) {
-				letter = "3";
-			} else if (ang < 2.85) {
-				letter = "2";
-			} else if (ang < 3.62) {
-				letter = "1";
-			} else if (ang < 4.30) {
-				letter = "8";
-			} else if (ang < 5.07) {
-				letter = "7";
-			} else {
-				letter = "6";
+				letter = "f";
 			} 
-        }
+		if (this.rotate == 90) {
+			values = ninety;
+		} else if (this.rotate == 180) {
+			values = oneeighty;
+		} else if (this.rotate == 270) {
+			values = twoseventy;
+		}
+        letter = values[letter];
+        
         //console.log(ang);
         //console.log(letter);
         return letter;
