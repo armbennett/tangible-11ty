@@ -13,7 +13,7 @@ export default class Tangible {
             "DELAY": "Delay",
             "FUNCTION": "Function",
             "ENDFUNCTION": "End Function",
-            "FUNCATION CALL": "Call Function",
+            "FUNCATIONCALL": "Call Function",
             "IF": "If",
             "ENDIF": "End If",
             "ELSE": "Else",
@@ -35,16 +35,9 @@ export default class Tangible {
             87: this.commands.IF,
             91: this.commands.ENDIF,
             93: this.commands.ELSE,
-            103: "0",
-            107: "1",
-            109: "2",
-            115: "3",
-            117: "4",
-            121: "5",
-            143: "6",
-            151: "7",
-            155: "8",
-            157: "9",
+            271: "run",
+            583: "runreset",
+            143: "read",
             205: this.commands.INCREMENT,
             211: this.commands.PLAYX,
             213: this.commands.DECREMENT,
@@ -56,6 +49,7 @@ export default class Tangible {
             355: this.commands.RANDOM
         };
         this.flipped = false;
+        this.runActive = false;
         this.topcodeHeight = 40;
         this.topcodeWidth = 100;
         this.userInput = 0; // value of TIBBL variable stored here
@@ -100,9 +94,19 @@ export default class Tangible {
         	    d: [3000, 1000],
         	    e: [4000, 4000],
         	    f: [8000, 4000], 
-        	    g: [12000, 4000],
-        	    h: [16000, 4000], 
-        	    p: [20000, 1000]},
+        	    g: [12000, 2000],
+        	    h: [14000, 8000], 
+        	    p: [22000, 1000]},
+        	    MusicLoops2: { 
+        	    a: [0, 4000], 
+        	    b: [4000, 4000], 
+        	    c: [8000, 8000], 
+        	    d: [16000, 4000],
+        	    e: [20000, 8000],
+        	    f: [28000, 8000], 
+        	    g: [36000, 8000],
+        	    h: [44000, 4000], 
+        	    p: [48000, 1000]},
         	    Notifications: { 
         	    a: [0, 1000], 
         	    b: [1000, 1000], 
@@ -585,14 +589,35 @@ export default class Tangible {
             // obtain a drawing context from the <canvas>
             // draw a circle over the top of each TopCode
             ctx.fillStyle = "rgba(255, 0, 0, 0.3)";   // very translucent red
+            let run = false;
+            let runReset = false;
+            let read = false;
             for (let i = 0; i < topcodes.length; i++) {
                 ctx.beginPath();
                 ctx.arc(topcodes[i].x, topcodes[i].y, topcodes[i].radius, 0, Math.PI * 2, true);
                 ctx.fill();
                 ctx.font = "26px Arial";
                 ctx.fillText(topcodes[i].code, topcodes[i].x, topcodes[i].y);
+                if (topcodes[i].code == 271) { run = true };
+                if (topcodes[i].code == 583) { runReset = true };
+                if (topcodes[i].code == 143) { read = true };
             tangible.currentCodes = topcodes;
             tangible.once = true;
+            }
+            if (run && !runReset && read && tangible.runActive) {
+                tangible.stopAllSounds();
+            	document.getElementById('code').value = tangible.scanCode();
+    			let textCode = document.getElementById('code').value;
+    			tangible.readCode(textCode);
+    			tangible.runActive = false;
+            } else if (run && !runReset && !read && tangible.runActive) {
+            	tangible.stopAllSounds();
+            	document.getElementById('code').value = tangible.scanCode();
+    			let textCode = document.getElementById('code').value;
+    			tangible.runTextCode(textCode);
+            	tangible.runActive = false;
+            } else if (!run && runReset) {
+            	tangible.runActive = true;
             }
         }, this);     
         }
