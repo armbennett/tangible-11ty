@@ -117,6 +117,30 @@ function hideExport(s) {
 	}
 }
 
+document.addEventListener('keydown', function(event) {
+    console.log('Key pressed: ' + event.key);
+    if (event.key == "ArrowRight" || event.key == "PageDown") {
+        if (tangible.isAudioPlaying()) {
+        tangible.stopAllSounds();
+    } else {
+    	if (document.getElementById('camera-button').checked) {
+    		document.getElementById('code').value = tangible.scanCode();
+    	}
+    	let textCode = document.getElementById('code').value;
+    	tangible.runTextCode(textCode);
+    }
+    } else if (event.key == "ArrowRight" || event.key == "PageUp") {
+    		if (tangible.isAudioPlaying()) {
+    	tangible.stopAllSounds();
+    } else {
+    	if (document.getElementById('camera-button').checked) {
+    		document.getElementById('code').value = tangible.scanCode();
+    	}
+    	let textCode = document.getElementById('code').value;
+    	tangible.readCode(textCode);
+    }
+    }
+});
 
 if (urlParams.has('flipped')) {
     tangible.flipped = true;
