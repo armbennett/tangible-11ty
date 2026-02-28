@@ -129,7 +129,7 @@ document.addEventListener('keydown', function(event) {
     	let textCode = document.getElementById('code').value;
     	tangible.runTextCode(textCode);
     }
-    } else if (event.key == "ArrowRight" || event.key == "PageUp") {
+    } else if (event.key == "ArrowLeft" || event.key == "PageUp") {
     		if (tangible.isAudioPlaying()) {
     	tangible.stopAllSounds();
     } else {
