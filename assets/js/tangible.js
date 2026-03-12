@@ -35,7 +35,6 @@ export default class Tangible {
             87: this.commands.IF,
             91: this.commands.ENDIF,
             93: this.commands.ELSE,
-            271: "run",
             205: this.commands.INCREMENT,
             211: this.commands.PLAYX,
             213: this.commands.DECREMENT,
@@ -134,6 +133,16 @@ export default class Tangible {
         	    g: [22000, 2000],
         	    h: [24000, 8000], 
         	    p: [31998, 1000]},
+        	    AnimalSounds: { 
+        	    a: [0, 1000], 
+        	    b: [1000, 1000], 
+        	    c: [2000, 1000], 
+        	    d: [3000, 1000],
+        	    e: [4000, 1000],
+        	    f: [5000, 1000], 
+        	    g: [6000, 1000],
+        	    h: [7000, 1000], 
+        	    p: [8000, 1000]}
         }
     }
      
