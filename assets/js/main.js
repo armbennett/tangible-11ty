@@ -26,7 +26,7 @@ runButton.addEventListener('mouseup', function (e) {
     		document.getElementById('code').value = tangible.scanCode();
     	}
     	let textCode = document.getElementById('code').value;
-    	TopCodes.stopVideoScan('video-canvas');
+    	//TopCodes.stopVideoScan('video-canvas');
     	tangible.runTextCode(textCode);
     }
 }.bind(this));
