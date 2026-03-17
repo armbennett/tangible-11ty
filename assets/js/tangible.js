@@ -300,7 +300,7 @@ export default class Tangible {
   			} else {
   				l = [];
   				this.playingSounds = [];
-  				TopCodes.startVideoScan('video-canvas',this.mode);
+  				//TopCodes.startVideoScan('video-canvas',this.mode);
   			}
 		});
 	}
