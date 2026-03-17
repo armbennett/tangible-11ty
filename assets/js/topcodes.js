@@ -8069,7 +8069,7 @@ var TopCodes = {
             console.log(vh);
             var vc = {
                 audio: false, video: {
-                	frameRate: { ideal: 5, max: 5 },
+                	frameRate: { ideal: 1, max: 1 },
                 	//aspectRatio: { exact: 1.78 },
                     facingMode: mode,
                     //width: {ideal: vh, min: vh, max: vh},
