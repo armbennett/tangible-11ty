@@ -13,7 +13,7 @@ export default class Tangible {
             "DELAY": "Delay",
             "FUNCTION": "Function",
             "ENDFUNCTION": "End Function",
-            "FUNCATIONCALL": "Call Function",
+            "FUNCTIONCALL": "Call Function",
             "IF": "If",
             "ENDIF": "End If",
             "ELSE": "Else",
