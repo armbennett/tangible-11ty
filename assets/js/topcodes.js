@@ -8040,8 +8040,8 @@ var TopCodes = {
     navigator.mediaDevices.getUserMedia({video: { 
                     	aspectRatio: { exact: 1.33 },
                     facingMode: mode,
-                    width: {ideal: 1080, min: 960, max: 960},
-                    height: {ideal: 1920, min: 1200, max: 1200}
+                    width: {ideal: 854, min: 640, max: 854},
+                    height: {ideal: 480, min: 480, max: 480}
                 }})
         TopCodes._mediaStreams[canvasId] ?
             TopCodes.stopVideoScan(canvasId) :
