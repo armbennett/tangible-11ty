@@ -536,7 +536,9 @@ export default class Tangible {
     runTextCode(codeText) {
  		var code = codeText.toLowerCase();
         let parsedJS = this.parseTextAsJavascript(code);
+        if (this.repeat) {
         parsedJS = "for (let x = 0; x < 10; x++) {\n" + parsedJS + "\n}";
+        }
         console.log(parsedJS);
         let parsedLines = [];
         parsedLines.push(this.evalTile(parsedJS, this));
