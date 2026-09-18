@@ -77,8 +77,6 @@ let repeatBtn = document.getElementById('repeat-button');
     	} else {
     		tangible.repeat = false;
     	}
-        TopCodes.startStopVideoScan('video-canvas',tangible.mode);
-        hideVideo();
 }.bind(this);
         
 let setSelect1 = document.getElementById('soundSets1');
