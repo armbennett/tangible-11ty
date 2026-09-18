@@ -536,16 +536,16 @@ export default class Tangible {
     runTextCode(codeText) {
  		var code = codeText.toLowerCase();
         let parsedJS = this.parseTextAsJavascript(code);
+        parsedJS = "for (let x = 0; x < 10; x++) {\n" + parsedJS + "\n}";
         console.log(parsedJS);
         let parsedLines = [];
         parsedLines.push(this.evalTile(parsedJS, this));
 
-        for (let x = 0; x < 10; x++) {
+        
         for (let i = 0; i < this.codeThreads.length; i++) {
             if (this.codeThreads[i].length > 0) {
         		this.playStart(this.threads[i],this.codeThreads[i]);
         	}
-        }
         }
         this.funcText = "";
         this.currThread = 0;
