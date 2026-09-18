@@ -62,6 +62,7 @@ export default class Tangible {
         this.attempts = 0; //keep track of number of attempts to successfully scan and run program
         this.funcText = "";
         this.funcActive = false;
+        this.repeat = true;
         this.soundSets = {
         	    OdeToJoy: { 
         	    a: [0, 1739], 
@@ -538,6 +539,8 @@ export default class Tangible {
         console.log(parsedJS);
         let parsedLines = [];
         parsedLines.push(this.evalTile(parsedJS, this));
+        while (this.repeat) {
+        
         for (let i = 0; i < this.codeThreads.length; i++) {
             if (this.codeThreads[i].length > 0) {
         		this.playStart(this.threads[i],this.codeThreads[i]);
@@ -545,6 +548,7 @@ export default class Tangible {
         }
         this.funcText = "";
         this.currThread = 0;
+        }
     }
     
     getThreadDuration() {
