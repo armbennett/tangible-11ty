@@ -62,7 +62,6 @@ export default class Tangible {
         this.attempts = 0; //keep track of number of attempts to successfully scan and run program
         this.funcText = "";
         this.funcActive = false;
-        this.repeat = false;
         this.soundSets = {
         	    OdeToJoy: { 
         	    a: [0, 1739], 
@@ -144,17 +143,7 @@ export default class Tangible {
         	    g: [6000, 1000],
         	    h: [7000, 1000], 
         	    p: [8000, 1000]},
-        	    Percussion8: { 
-        	    a: [0, 125], 
-        	    b: [250, 125], 
-        	    c: [500, 125], 
-        	    d: [750, 125],
-        	    e: [1000, 125],
-        	    f: [1250, 125], 
-        	    g: [1500, 1000],
-        	    h: [2500, 1000], 
-        	    p: [3500, 125]},
-        	    Percussion4: { 
+        	    Percussion: { 
         	    a: [0, 250], 
         	    b: [250, 250], 
         	    c: [500, 250], 
@@ -163,27 +152,7 @@ export default class Tangible {
         	    f: [1250, 250], 
         	    g: [1500, 1000],
         	    h: [2500, 1000], 
-        	    p: [3500, 250]},
-        	    MusicLoops60bpm: { 
-        	    a: [0, 4000], 
-        	    b: [4000, 4000], 
-        	    c: [8000, 4000], 
-        	    d: [12000, 4000],
-        	    e: [16000, 4000],
-        	    f: [20000, 4000], 
-        	    g: [24000, 4000],
-        	    h: [28000, 4000], 
-        	    p: [32000, 250]},
-        	    MusicLoops120bpm: { 
-        	    a: [0, 2000], 
-        	    b: [2000, 2000], 
-        	    c: [4000, 2000], 
-        	    d: [6000, 2000],
-        	    e: [8000, 2000],
-        	    f: [10000, 2000], 
-        	    g: [12000, 2000],
-        	    h: [14000, 2000], 
-        	    p: [16000, 125]}
+        	    p: [3500, 250]}
         }
     }
      
@@ -566,9 +535,6 @@ export default class Tangible {
     runTextCode(codeText) {
  		var code = codeText.toLowerCase();
         let parsedJS = this.parseTextAsJavascript(code);
-        if (this.repeat) {
-        parsedJS = "for (let x = 0; x < 10; x++) {\n" + parsedJS + "\n}";
-        }
         console.log(parsedJS);
         let parsedLines = [];
         parsedLines.push(this.evalTile(parsedJS, this));
