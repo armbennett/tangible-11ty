@@ -173,7 +173,7 @@ export default class Tangible {
         	    g: [11000, 500],
         	    h: [11500, 500], 
         	    p: [12250, 500]},
-        	    TenInTheBed: { 
+        	    FiveInTheBed: { 
         	    a: [0, 1550], 
         	    b: [1550, 1684], 
         	    c: [3234, 1673], 
