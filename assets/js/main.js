@@ -68,16 +68,6 @@ let cameraBtn = document.getElementById('camera-button');
         TopCodes.startStopVideoScan('video-canvas',tangible.mode);
         hideVideo();
 }.bind(this);
-
-let repeatBtn = document.getElementById('repeat-button');
-    repeatBtn.onclick = function () {
-        
-    	if (document.getElementById('repeat-button').checked) {
-    		tangible.repeat = true;
-    	} else {
-    		tangible.repeat = false;
-    	}
-}.bind(this);
         
 let setSelect1 = document.getElementById('soundSets1');
 setSelect1.onchange = function () {
