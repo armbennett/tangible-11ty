@@ -569,7 +569,6 @@ export default class Tangible {
         let parsedLines = [];
         parsedLines.push(this.evalTile(parsedJS, this));
 		let duration = this.getThreadDuration();
-        console.log(duration);
         for (let i = 0; i < this.codeThreads.length; i++) {
             if (this.codeThreads[i].length > 0) {
         		this.playStart(this.threads[i],this.codeThreads[i]);
@@ -577,7 +576,6 @@ export default class Tangible {
         }
         this.funcText = "";
         this.currThread = 0;
-        console.log(duration);
     }
     
     getThreadDuration() {
