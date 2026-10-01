@@ -593,6 +593,7 @@ export default class Tangible {
         	}
         }
     	return durations;
+    	console.log(durations);
     }
     
     recordCode(codeText) {
