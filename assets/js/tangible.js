@@ -191,6 +191,7 @@ export default class Tangible {
 		var thread = new Howl({
   		src: ["assets/sound/"+soundSet+".mp3"],
   		volume: 1,
+  		html5: false,
   		sprite: this.soundSets[soundSet],
 		});
 		this.threads[t] = thread;
