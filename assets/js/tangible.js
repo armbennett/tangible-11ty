@@ -568,7 +568,7 @@ export default class Tangible {
         console.log(parsedJS);
         let parsedLines = [];
         parsedLines.push(this.evalTile(parsedJS, this));
-
+		let duration = this.getThreadDuration();
         
         for (let i = 0; i < this.codeThreads.length; i++) {
             if (this.codeThreads[i].length > 0) {
